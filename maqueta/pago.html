@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!-- Propuesta de rediseño de la compra de corlima.pe — documento de trabajo interno.
+     No es el sitio real: nada envía datos, no hay pagos y la página no se indexa. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pago — Corlima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .medio{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:#fff;
+    border:1px solid var(--linea);border-radius:var(--radio);padding:15px 18px;margin-bottom:11px;cursor:pointer;transition:.15s}
+  .medio:hover{border-color:var(--azul);box-shadow:0 3px 12px rgba(13,40,122,.10)}
+  .medio.sel{border-color:var(--azul);background:#F7F9FE;box-shadow:0 0 0 1px var(--azul) inset}
+  .medio .mi{width:38px;height:28px;border-radius:5px;display:grid;place-items:center;flex:none;color:#fff}
+  .medio .mi svg{width:19px;height:19px}
+  .medio .mt{flex:1;min-width:0}
+  .medio .mt b{display:block;font-weight:500;font-size:14.5px}
+  .medio .mt span{font-size:12.5px;color:var(--gris-suave)}
+  .medio .flecha{width:16px;height:16px;color:var(--gris-suave)}
+  .grupo{font-size:17px;font-weight:700;margin:0 0 14px}
+  .grupo.dos{margin-top:26px}
+  .form-tarjeta{display:none;padding:18px;border:1px dashed var(--linea);border-radius:var(--radio);margin-bottom:16px;background:#FAFBFE}
+  .form-tarjeta.ver{display:block}
+  .nota-medio{display:none;padding:16px 18px;border-radius:var(--radio);background:#F2F6FD;
+    border:1px solid #D5E2F5;margin-bottom:16px;font-size:13.5px;color:var(--gris);line-height:1.5}
+  .nota-medio.ver{display:block}
+  .nota-medio b{color:var(--tinta)}
+  .terminos{display:flex;align-items:flex-start;gap:10px;margin-top:16px;font-size:13px;color:var(--gris);line-height:1.45}
+  .terminos input{margin-top:2px;accent-color:var(--azul);width:16px;height:16px;flex:none}
+  .cargando{position:fixed;inset:0;background:rgba(255,255,255,.92);z-index:900;display:none;
+    flex-direction:column;align-items:center;justify-content:center;gap:18px}
+  .cargando.ver{display:flex}
+  .aro{width:44px;height:44px;border:3px solid var(--linea);border-top-color:var(--azul);border-radius:50%;
+    animation:gira .9s linear infinite}
+  @keyframes gira{to{transform:rotate(360deg)}}
+  .cargando p{margin:0;color:var(--gris);font-size:14.5px}
+  @media (prefers-reduced-motion:reduce){.aro{animation:none}}
+</style>
+</head>
+<body>
+
+<main class="cuerpo">
+  <div class="caja">
+    <div data-pasos></div>
+
+    <div class="direc" id="direcBox"></div>
+
+    <div class="cols">
+      <div>
+        <section class="panel"><div class="pad">
+          <h2 class="grupo">Agregar tarjeta</h2>
+          <button type="button" class="medio" data-medio="credito">
+            <span class="mi" style="background:var(--azul)" id="i1"></span>
+            <span class="mt"><b>Tarjeta de crédito</b><span>Visa, Mastercard, American Express</span></span>
+            <span class="flecha" id="f1"></span>
+          </button>
+          <button type="button" class="medio" data-medio="debito">
+            <span class="mi" style="background:#4A5578" id="i2"></span>
+            <span class="mt"><b>Tarjeta de débito</b><span>Débito de cualquier banco</span></span>
+            <span class="flecha" id="f2"></span>
+          </button>
+
+          <div class="form-tarjeta" id="formTarjeta">
+            <div class="campo" id="cNum"><label for="num">Número de tarjeta</label>
+              <input type="text" id="num" inputmode="numeric" placeholder="0000 0000 0000 0000" maxlength="19">
+              <span class="err">Ingresa los 16 dígitos.</span></div>
+            <div class="dos">
+              <div class="campo" id="cVen"><label for="ven">Vencimiento</label>
+                <input type="text" id="ven" placeholder="MM/AA" maxlength="5">
+                <span class="err">Usa el formato MM/AA.</span></div>
+              <div class="campo" id="cCvv"><label for="cvv">CVV</label>
+                <input type="text" id="cvv" inputmode="numeric" maxlength="4" placeholder="123">
+                <span class="err">3 o 4 dígitos.</span></div>
+            </div>
+            <div class="campo" id="cTit"><label for="tit">Nombre como aparece en la tarjeta</label>
+              <input type="text" id="tit">
+              <span class="err">Escribe el nombre del titular.</span></div>
+            <p style="margin:0;font-size:12px;color:var(--gris-suave)">Maqueta: no escribas datos reales, nada se envía.</p>
+          </div>
+
+          <h2 class="grupo dos">Otras opciones</h2>
+          <button type="button" class="medio" data-medio="yape">
+            <span class="mi" style="background:#742284" id="i3"></span>
+            <span class="mt"><b>Yape</b><span>Escanea el QR desde tu app</span></span>
+            <span class="flecha" id="f3"></span>
+          </button>
+          <button type="button" class="medio" data-medio="efectivo">
+            <span class="mi" style="background:#F0A500" id="i4"></span>
+            <span class="mt"><b>PagoEfectivo o QR</b><span>Paga en banco, agente o app bancaria</span></span>
+            <span class="flecha" id="f4"></span>
+          </button>
+
+          <div class="nota-medio" id="notaYape">
+            Al confirmar te mostramos un <b>código QR</b> para escanear desde la app de Yape.
+            El pedido se confirma solo, apenas Mercado Pago avisa que el pago entró.
+          </div>
+          <div class="nota-medio" id="notaEfectivo">
+            Al confirmar generamos un <b>código CIP</b> con 24 horas de vigencia. Puedes pagarlo en agentes,
+            bancos o desde tu app bancaria. El pedido se confirma solo cuando el pago se acredita.
+          </div>
+
+          <label class="terminos">
+            <input type="checkbox" id="acepto">
+            <span>Declaro que leí y acepto los <a href="#" style="color:var(--azul);text-decoration:underline">términos y condiciones</a> y la política de datos personales.</span>
+          </label>
+        </div></section>
+
+        <a class="volver" href="entrega.html" id="volver"></a>
+      </div>
+
+      <aside class="resumen" data-resumen aria-label="Resumen de la compra"></aside>
+    </div>
+  </div>
+</main>
+
+<div class="movil">
+  <div><div class="m-t">Total</div><div class="m-n" id="mTotal">S/ 0,00</div></div>
+  <button class="cta" type="button" id="ctaMovil" disabled>Pagar</button>
+</div>
+
+<div class="cargando" id="cargando">
+  <div class="aro"></div>
+  <p id="txtCarga">Conectando con Mercado Pago…</p>
+</div>
+
+<script src="tienda.js"></script>
+<script>
+(function(){
+  var S = Tienda.SVG, est = Tienda.estado;
+
+  if(!est.items.length){ location.replace('carrito.html'); return; }
+  if(!est.entrega || !est.entrega.etiqueta){ location.replace('entrega.html'); return; }
+
+  document.getElementById('volver').innerHTML = S.izq + ' Volver a entrega';
+  document.getElementById('i1').innerHTML = S.tarjeta;
+  document.getElementById('i2').innerHTML = S.tarjeta;
+  document.getElementById('i3').innerHTML = S.celular;
+  document.getElementById('i4').innerHTML = S.qr;
+  ['f1','f2','f3','f4'].forEach(function(id){ document.getElementById(id).innerHTML = S.der; });
+
+  // dirección elegida
+  var e = est.entrega;
+  var txt = e.modo === 'tienda'
+    ? 'Retiro en Tienda Corlima'
+    : e.calle + (e.refe ? ', ' + e.refe : '') + ', ' + e.dist + ', ' + e.prov + ', ' + e.depa;
+  document.getElementById('direcBox').innerHTML =
+    S.pin + '<b>' + txt + '</b><span style="color:var(--gris);font-size:13px">&middot; ' + e.etiqueta + '</span>' +
+    '<a class="cambiar" href="entrega.html">Cambiar</a>';
+
+  var medio = null;
+
+  document.querySelectorAll('.medio').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.medio').forEach(function(x){ x.classList.remove('sel'); });
+      b.classList.add('sel');
+      medio = b.getAttribute('data-medio');
+      var tarjeta = medio === 'credito' || medio === 'debito';
+      document.getElementById('formTarjeta').classList.toggle('ver', tarjeta);
+      document.getElementById('notaYape').classList.toggle('ver', medio === 'yape');
+      document.getElementById('notaEfectivo').classList.toggle('ver', medio === 'efectivo');
+      revisar();
+    };
+  });
+
+  // formato de tarjeta
+  document.getElementById('num').addEventListener('input', function(){
+    this.value = this.value.replace(/\D/g,'').slice(0,16).replace(/(.{4})/g,'$1 ').trim();
+  });
+  document.getElementById('ven').addEventListener('input', function(){
+    var v = this.value.replace(/\D/g,'').slice(0,4);
+    this.value = v.length > 2 ? v.slice(0,2) + '/' + v.slice(2) : v;
+  });
+  document.getElementById('cvv').addEventListener('input', function(){
+    this.value = this.value.replace(/\D/g,'');
+  });
+  document.getElementById('acepto').onchange = revisar;
+
+  function revisar(){
+    var ok = !!medio && document.getElementById('acepto').checked;
+    var b = document.getElementById('ctaSig'); if(b) b.disabled = !ok;
+    document.getElementById('ctaMovil').disabled = !ok;
+  }
+
+  function validarTarjeta(){
+    var ok = true;
+    function chk(cid, cond){ var c=document.getElementById(cid); c.classList.toggle('malo', !cond); if(!cond) ok=false; }
+    chk('cNum', document.getElementById('num').value.replace(/\s/g,'').length === 16);
+    chk('cVen', /^\d{2}\/\d{2}$/.test(document.getElementById('ven').value));
+    chk('cCvv', document.getElementById('cvv').value.length >= 3);
+    chk('cTit', document.getElementById('tit').value.trim().length > 3);
+    return ok;
+  }
+
+  function pagar(){
+    if(!medio) return;
+    if((medio === 'credito' || medio === 'debito') && !validarTarjeta()){
+      document.querySelector('.campo.malo input').focus(); return;
+    }
+    var textos = {
+      credito:'Conectando con Mercado Pago…', debito:'Conectando con Mercado Pago…',
+      yape:'Generando el código QR de Yape…', efectivo:'Generando tu código CIP…'
+    };
+    document.getElementById('txtCarga').textContent = textos[medio];
+    document.getElementById('cargando').classList.add('ver');
+
+    est.pago = { medio: medio };
+    est.pedido = 'CL-' + String(100000 + Math.floor(Math.random() * 899999));
+    Tienda.guardar();
+    setTimeout(function(){ Tienda.irA('confirmacion.html'); }, 1700);
+  }
+
+  Tienda.iniciar(3, { texto:'Pagar', activo:false, cupon:false });
+  var b = document.getElementById('ctaSig'); if(b) b.onclick = pagar;
+  document.getElementById('ctaMovil').onclick = pagar;
+  revisar();
+
+  document.addEventListener('submit', function(ev){ ev.preventDefault(); });
+})();
+</script>
+</body>
+</html>

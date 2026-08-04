@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<!-- Propuesta de rediseño de la compra de corlima.pe — documento de trabajo interno.
+     No es el sitio real: nada envía datos y la página no se indexa. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Entrega — Corlima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<main class="cuerpo">
+  <div class="caja">
+    <div data-pasos></div>
+
+    <div class="cols">
+      <div>
+        <!-- 1. correo -->
+        <section class="panel" id="pCorreo">
+          <div class="pad">
+            <h2>Ingresa tu correo para continuar</h2>
+            <p class="sub">Te enviaremos ahí la confirmación y el seguimiento de tu pedido.</p>
+            <div class="campo" id="cCorreo">
+              <label for="correo">Correo electrónico</label>
+              <input type="email" id="correo" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+              <span class="err">Escribe un correo válido.</span>
+            </div>
+            <button class="cta" type="button" id="okCorreo" style="max-width:260px;margin-top:4px">Continuar</button>
+          </div>
+        </section>
+
+        <!-- 2. datos -->
+        <section class="panel oculto" id="pDatos">
+          <div class="pad">
+            <h2>Tus datos</h2>
+            <p class="sub">Necesitamos el DNI para emitir tu boleta electrónica.</p>
+            <div class="tabs">
+              <button type="button" class="on" data-tipo="hogar"></button>
+              <button type="button" data-tipo="empresa"></button>
+            </div>
+            <div class="dos">
+              <div class="campo" id="cNombre">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" autocomplete="given-name">
+                <span class="err">Escribe tu nombre.</span>
+              </div>
+              <div class="campo" id="cApellido">
+                <label for="apellido">Apellidos</label>
+                <input type="text" id="apellido" autocomplete="family-name">
+                <span class="err">Escribe tus apellidos.</span>
+              </div>
+            </div>
+            <div class="dos">
+              <div class="campo" id="cDoc">
+                <label for="doc" id="lDoc">DNI</label>
+                <input type="text" id="doc" inputmode="numeric" maxlength="8">
+                <span class="err" id="eDoc">El DNI tiene 8 dígitos.</span>
+              </div>
+              <div class="campo" id="cCel">
+                <label for="cel">Celular</label>
+                <input type="text" id="cel" inputmode="numeric" maxlength="9" placeholder="9########">
+                <span class="err">El celular tiene 9 dígitos.</span>
+              </div>
+            </div>
+            <div class="campo oculto" id="cRazon">
+              <label for="razon">Razón social</label>
+              <input type="text" id="razon">
+              <span class="err">Escribe la razón social.</span>
+            </div>
+            <button class="cta" type="button" id="okDatos" style="max-width:260px">Continuar</button>
+          </div>
+        </section>
+
+        <!-- 3. entrega -->
+        <section class="panel oculto" id="pEntrega">
+          <div class="pad">
+            <h2>Elige un tipo de entrega</h2>
+            <p class="sub" id="subEntrega">Puedes recogerlo en tienda o pedirlo a tu dirección.</p>
+            <div class="opcs" id="opcsTipo"></div>
+          </div>
+        </section>
+
+        <!-- 4. opciones concretas -->
+        <section class="panel oculto" id="pOpciones">
+          <div class="pad">
+            <h2 id="tOpciones">Opciones disponibles</h2>
+            <p class="sub" id="sOpciones"></p>
+            <div class="opcs" id="opcsEnvio"></div>
+          </div>
+        </section>
+
+        <a class="volver" href="carrito.html" id="volver"></a>
+      </div>
+
+      <aside class="resumen" data-resumen aria-label="Resumen de la compra"></aside>
+    </div>
+  </div>
+</main>
+
+<div class="movil">
+  <div><div class="m-t">Total</div><div class="m-n" id="mTotal">S/ 0,00</div></div>
+  <button class="cta" type="button" id="ctaMovil" disabled>Ir a pagar</button>
+</div>
+
+<!-- cajón de dirección -->
+<div class="fondo-modal" id="fondo"></div>
+<aside class="cajon" id="cajon" aria-label="Agregar dirección" role="dialog" aria-modal="true">
+  <header>
+    <span id="icoCajon"></span>
+    <h3>Agregar dirección</h3>
+    <button type="button" id="cerrarCajon" aria-label="Cerrar"></button>
+  </header>
+  <div class="con">
+    <div class="campo"><label for="depa">Departamento</label>
+      <select id="depa"></select></div>
+    <div class="campo"><label for="prov">Provincia</label>
+      <select id="prov"></select></div>
+    <div class="campo"><label for="dist">Distrito</label>
+      <select id="dist"></select></div>
+    <div class="campo" id="cCalle"><label for="calle">Dirección</label>
+      <input type="text" id="calle" placeholder="Av. / Jr. / Calle y número">
+      <span class="err">Escribe tu dirección.</span></div>
+    <div class="campo"><label for="refe">Depto., casa, piso, interior (opcional)</label>
+      <input type="text" id="refe"></div>
+  </div>
+  <footer>
+    <button type="button" class="can" id="cancelarDir">Cancelar</button>
+    <button type="button" class="ok" id="guardarDir">Continuar</button>
+  </footer>
+</aside>
+
+<script src="tienda.js"></script>
+<script>
+(function(){
+  var S = Tienda.SVG, est = Tienda.estado;
+
+  if(!est.items.length){ location.replace('carrito.html'); return; }
+
+  document.getElementById('volver').innerHTML = S.izq + ' Volver al carro';
+  document.getElementById('icoCajon').innerHTML = S.pin;
+  document.getElementById('cerrarCajon').innerHTML = S.equis;
+  document.querySelector('[data-tipo="hogar"]').innerHTML = S.casa + ' Cliente Hogar';
+  document.querySelector('[data-tipo="empresa"]').innerHTML = S.edificio + ' Cliente Empresa';
+
+  var GEO = {
+    'Lima':{ 'Lima':['Miraflores','San Isidro','Surquillo','Santiago de Surco','San Borja','La Molina','Jesús María',
+                     'Lince','Magdalena del Mar','Pueblo Libre','San Miguel','Barranco','Chorrillos','La Victoria','Cercado de Lima'],
+             'Callao':['Callao','Bellavista','La Perla','Ventanilla'] },
+    'Arequipa':{ 'Arequipa':['Cercado','Yanahuara','Cayma','José Luis Bustamante y Rivero'] },
+    'La Libertad':{ 'Trujillo':['Trujillo','Víctor Larco Herrera','Huanchaco'] },
+    'Cusco':{ 'Cusco':['Cusco','Wanchaq','San Sebastián'] }
+  };
+
+  var tipo = 'hogar';
+
+  /* ---- paso 1: correo ---- */
+  function validoCorreo(v){ return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v); }
+  document.getElementById('okCorreo').onclick = function(){
+    var i = document.getElementById('correo'), c = document.getElementById('cCorreo');
+    if(!validoCorreo(i.value.trim())){ c.classList.add('malo'); i.focus(); return; }
+    c.classList.remove('malo');
+    est.cliente = est.cliente || {};
+    est.cliente.correo = i.value.trim();
+    Tienda.guardar();
+    document.getElementById('pCorreo').innerHTML =
+      '<div class="pad" style="display:flex;align-items:center;gap:12px">'+
+      '<span style="color:var(--verde);line-height:0">'+S.check+'</span>'+
+      '<div style="flex:1"><div style="font-size:13px;color:var(--gris)">Correo</div>'+
+      '<b style="font-weight:500">'+est.cliente.correo+'</b></div>'+
+      '<button type="button" class="cambiar" onclick="location.reload()" '+
+      'style="background:none;border:0;color:var(--azul);text-decoration:underline;cursor:pointer">Cambiar</button></div>';
+    abrir('pDatos');
+  };
+
+  function abrir(id){
+    var p = document.getElementById(id);
+    p.classList.remove('oculto');
+    p.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'center'});
+  }
+
+  /* ---- paso 2: datos ---- */
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.onclick = function(){
+      document.querySelectorAll('.tabs button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      tipo = b.getAttribute('data-tipo');
+      var esEmp = tipo === 'empresa';
+      document.getElementById('cRazon').classList.toggle('oculto', !esEmp);
+      document.getElementById('lDoc').textContent = esEmp ? 'RUC' : 'DNI';
+      document.getElementById('eDoc').textContent = esEmp ? 'El RUC tiene 11 dígitos.' : 'El DNI tiene 8 dígitos.';
+      var d = document.getElementById('doc');
+      d.maxLength = esEmp ? 11 : 8; d.value = '';
+    };
+  });
+  ['doc','cel'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      this.value = this.value.replace(/\D/g,'');
+    });
+  });
+
+  document.getElementById('okDatos').onclick = function(){
+    var ok = true;
+    function chk(cid, cond){ var c=document.getElementById(cid); c.classList.toggle('malo', !cond); if(!cond) ok=false; }
+    var largo = tipo === 'empresa' ? 11 : 8;
+    chk('cNombre', document.getElementById('nombre').value.trim().length > 1);
+    chk('cApellido', document.getElementById('apellido').value.trim().length > 1);
+    chk('cDoc', document.getElementById('doc').value.length === largo);
+    chk('cCel', document.getElementById('cel').value.length === 9);
+    if(tipo === 'empresa') chk('cRazon', document.getElementById('razon').value.trim().length > 2);
+    if(!ok){ document.querySelector('.campo.malo input').focus(); return; }
+
+    est.cliente.tipo = tipo;
+    est.cliente.nombre = document.getElementById('nombre').value.trim();
+    est.cliente.apellido = document.getElementById('apellido').value.trim();
+    est.cliente.doc = document.getElementById('doc').value;
+    est.cliente.cel = document.getElementById('cel').value;
+    if(tipo === 'empresa') est.cliente.razon = document.getElementById('razon').value.trim();
+    Tienda.guardar();
+
+    document.getElementById('pDatos').innerHTML =
+      '<div class="pad" style="display:flex;align-items:center;gap:12px">'+
+      '<span style="color:var(--verde);line-height:0">'+S.check+'</span>'+
+      '<div style="flex:1"><div style="font-size:13px;color:var(--gris)">Tus datos</div>'+
+      '<b style="font-weight:500">'+est.cliente.nombre+' '+est.cliente.apellido+' &middot; '+
+      (tipo==='empresa'?'RUC ':'DNI ')+est.cliente.doc+'</b></div>'+
+      '<button type="button" onclick="location.reload()" '+
+      'style="background:none;border:0;color:var(--azul);text-decoration:underline;cursor:pointer">Cambiar</button></div>';
+    abrir('pEntrega');
+    pintarTipos();
+  };
+
+  /* ---- paso 3: tipo de entrega ---- */
+  function pintarTipos(){
+    document.getElementById('opcsTipo').innerHTML =
+      '<label class="opc" data-modo="tienda"><input type="radio" name="modo" value="tienda">'+
+      '<span class="ico">'+S.tienda+'</span><span class="txt"><span class="t">Retira tu pedido</span>'+
+      '<span class="d">Elige el lugar donde quieres hacer tu retiro</span></span>'+
+      '<span class="precio">Gratis</span></label>'+
+      '<label class="opc" data-modo="envio"><input type="radio" name="modo" value="envio">'+
+      '<span class="ico">'+S.camion+'</span><span class="txt"><span class="t">Envío a domicilio</span>'+
+      '<span class="d">Ingresa tu dirección para conocer disponibilidad</span></span></label>';
+
+    document.querySelectorAll('#opcsTipo .opc').forEach(function(l){
+      l.onclick = function(){
+        document.querySelectorAll('#opcsTipo .opc').forEach(function(x){ x.classList.remove('sel'); });
+        l.classList.add('sel');
+        var modo = l.getAttribute('data-modo');
+        if(modo === 'envio'){ mostrarCajon(); }
+        else { est.entrega = { modo:'tienda' }; Tienda.guardar(); opcionesTienda(); }
+      };
+    });
+  }
+
+  /* ---- cajón de dirección ---- */
+  function llenar(sel, arr){
+    sel.innerHTML = arr.map(function(v){ return '<option>'+v+'</option>'; }).join('');
+  }
+  var depa=document.getElementById('depa'), prov=document.getElementById('prov'), dist=document.getElementById('dist');
+  llenar(depa, Object.keys(GEO));
+  function sincroProv(){ llenar(prov, Object.keys(GEO[depa.value])); sincroDist(); }
+  function sincroDist(){ llenar(dist, GEO[depa.value][prov.value]); }
+  depa.onchange = sincroProv; prov.onchange = sincroDist;
+  sincroProv();
+
+  function mostrarCajon(){
+    document.getElementById('fondo').classList.add('ver');
+    document.getElementById('cajon').classList.add('ver');
+    setTimeout(function(){ document.getElementById('calle').focus(); }, 260);
+  }
+  function ocultarCajon(){
+    document.getElementById('fondo').classList.remove('ver');
+    document.getElementById('cajon').classList.remove('ver');
+  }
+  document.getElementById('cerrarCajon').onclick = ocultarCajon;
+  document.getElementById('cancelarDir').onclick = ocultarCajon;
+  document.getElementById('fondo').onclick = ocultarCajon;
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') ocultarCajon(); });
+
+  document.getElementById('guardarDir').onclick = function(){
+    var calle = document.getElementById('calle');
+    var c = document.getElementById('cCalle');
+    if(calle.value.trim().length < 5){ c.classList.add('malo'); calle.focus(); return; }
+    c.classList.remove('malo');
+    est.entrega = { modo:'envio', depa:depa.value, prov:prov.value, dist:dist.value,
+                    calle:calle.value.trim(), refe:document.getElementById('refe').value.trim() };
+    Tienda.guardar();
+    ocultarCajon();
+    opcionesEnvio();
+  };
+
+  /* ---- paso 4: opciones ---- */
+  function cabeceraDireccion(){
+    var e = est.entrega, txt;
+    if(e.modo === 'tienda') txt = 'Retiro en Tienda Corlima';
+    else txt = e.calle + (e.refe ? ', ' + e.refe : '') + ', ' + e.dist + ', ' + e.prov + ', ' + e.depa;
+    var vieja = document.getElementById('direcBox');
+    if(vieja) vieja.remove();
+    var d = document.createElement('div');
+    d.className = 'direc'; d.id = 'direcBox';
+    d.innerHTML = S.pin + '<b>' + txt + '</b>' +
+      '<button class="cambiar" type="button" onclick="location.reload()">Cambiar</button>';
+    var cont = document.getElementById('pOpciones');
+    cont.parentNode.insertBefore(d, cont);
+  }
+
+  function elegir(lista, cb){
+    document.querySelectorAll('#opcsEnvio .opc').forEach(function(l){
+      l.onclick = function(){
+        document.querySelectorAll('#opcsEnvio .opc').forEach(function(x){ x.classList.remove('sel'); });
+        l.classList.add('sel');
+        cb(l);
+      };
+    });
+  }
+
+  function listo(costo, etiqueta){
+    est.entrega.costo = costo;
+    est.entrega.etiqueta = etiqueta;
+    Tienda.guardar();
+    refrescar(true);
+  }
+
+  function opcionesTienda(){
+    cabeceraDireccion();
+    document.getElementById('tOpciones').textContent = 'Retiro en un punto';
+    document.getElementById('sOpciones').textContent = 'Sin costo. Te avisamos por correo cuando esté listo.';
+    document.getElementById('opcsEnvio').innerHTML =
+      '<label class="opc" data-costo="0" data-eti="Retiro en Tienda Corlima — hoy"><input type="radio" name="env">'+
+      '<span class="ico">'+S.tienda+'</span><span class="txt"><span class="t">Retira hoy · Tienda Corlima</span>'+
+      '<span class="d">Desde 2 horas después de confirmado el pago</span></span><span class="precio">Gratis</span></label>'+
+      '<label class="opc" data-costo="0" data-eti="Retiro en Tienda Corlima — mañana"><input type="radio" name="env">'+
+      '<span class="ico">'+S.calendario+'</span><span class="txt"><span class="t">Retira mañana · Tienda Corlima</span>'+
+      '<span class="d">Horario de 10:00 a 20:00</span></span><span class="precio">Gratis</span></label>';
+    abrir('pOpciones');
+    elegir(null, function(l){ listo(0, l.getAttribute('data-eti')); });
+    refrescar(false);
+  }
+
+  function opcionesEnvio(){
+    cabeceraDireccion();
+    var lejos = est.entrega.depa !== 'Lima';
+    document.getElementById('tOpciones').textContent = 'Envío a domicilio';
+    document.getElementById('sOpciones').textContent = lejos
+      ? 'Opciones disponibles para ' + est.entrega.dist + ', ' + est.entrega.depa + '.'
+      : 'Opciones disponibles para ' + est.entrega.dist + '.';
+    var html =
+      '<label class="opc" data-costo="'+(lejos?19.9:7.9)+'" data-eti="'+(lejos?'Envío estándar':'Llega mañana')+'">'+
+      '<input type="radio" name="env"><span class="ico">'+S.camion+'</span><span class="txt">'+
+      '<span class="t">'+(lejos?'Envío estándar':'Llega mañana')+'</span>'+
+      '<span class="d">'+(lejos?'Entre 3 y 5 días hábiles':'Mañana de 9:00 a 21:00')+'</span></span>'+
+      '<span class="precio" style="color:var(--tinta)">'+Tienda.money(lejos?19.9:7.9)+'</span></label>';
+    if(!lejos){
+      html +=
+        '<label class="opc" data-costo="19.9" data-eti="Envío express hoy"><input type="radio" name="env">'+
+        '<span class="ico">'+S.reloj+'</span><span class="txt"><span class="t">Envío express hoy</span>'+
+        '<span class="d">En las próximas 4 horas</span></span>'+
+        '<span class="precio" style="color:var(--tinta)">'+Tienda.money(19.9)+'</span></label>'+
+        '<label class="opc" data-costo="0" data-eti="Envío gratis en 3 días"><input type="radio" name="env">'+
+        '<span class="ico">'+S.calendario+'</span><span class="txt"><span class="t">Envío gratis</span>'+
+        '<span class="d">Entre 2 y 3 días hábiles</span></span><span class="precio">Gratis</span></label>';
+    }
+    document.getElementById('opcsEnvio').innerHTML = html;
+    abrir('pOpciones');
+    elegir(null, function(l){ listo(parseFloat(l.getAttribute('data-costo')), l.getAttribute('data-eti')); });
+    refrescar(false);
+  }
+
+  /* ---- resumen ---- */
+  function refrescar(activo){
+    Tienda.resumen({
+      texto:'Ir a pagar',
+      activo: !!activo,
+      alSeguir: function(){ Tienda.irA('pago.html'); }
+    });
+  }
+
+  document.addEventListener('submit', function(e){ e.preventDefault(); });
+
+  Tienda.iniciar(2, { texto:'Ir a pagar', activo:false });
+  refrescar(false);
+})();
+</script>
+</body>
+</html>

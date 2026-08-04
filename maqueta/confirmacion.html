@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!-- Propuesta de rediseño de la compra de corlima.pe — documento de trabajo interno.
+     No es el sitio real: no existe ningún pedido ni pago. -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pedido confirmado — Corlima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .qr{width:170px;height:170px;margin:18px auto 6px;border:1px solid var(--linea);border-radius:var(--radio);
+    display:grid;place-items:center;background:#fff;color:var(--tinta)}
+  .qr svg{width:118px;height:118px}
+  .cip{font-size:25px;font-weight:700;letter-spacing:.09em;font-variant-numeric:tabular-nums;margin:14px 0 4px}
+  .avisoPago{background:#FFF8E6;border:1px solid #F0DFA8;border-radius:var(--radio);padding:16px 18px;
+    margin:20px 0 0;font-size:13.5px;color:#6B5A12;line-height:1.5;text-align:left}
+  .avisoPago b{color:var(--tinta)}
+</style>
+</head>
+<body>
+
+<main class="cuerpo">
+  <div class="caja">
+    <div class="ok-caja">
+      <div class="marca-ok" id="tick"></div>
+      <h1 id="tit">¡Gracias por tu compra!</h1>
+      <p class="sub" id="baj" style="margin:0">Te enviamos la confirmación a tu correo.</p>
+      <div class="ped">Pedido <b id="nped">—</b></div>
+
+      <div id="zonaPago"></div>
+
+      <div class="ok-datos" id="datos"></div>
+
+      <a class="cta" href="carrito.html" id="volverInicio" style="margin-top:24px;text-decoration:none">Volver a la tienda</a>
+    </div>
+  </div>
+</main>
+
+<script src="tienda.js"></script>
+<script>
+(function(){
+  var S = Tienda.SVG, est = Tienda.estado;
+
+  if(!est.pedido){ location.replace('carrito.html'); return; }
+
+  document.getElementById('tick').innerHTML = S.check;
+  document.getElementById('nped').textContent = est.pedido;
+
+  var t = Tienda.totales();
+  var e = est.entrega, c = est.cliente, medio = est.pago ? est.pago.medio : 'credito';
+
+  var nombreMedio = { credito:'Tarjeta de crédito', debito:'Tarjeta de débito',
+                      yape:'Yape', efectivo:'PagoEfectivo' }[medio];
+
+  // pagos que quedan pendientes de acreditación
+  if(medio === 'yape' || medio === 'efectivo'){
+    document.getElementById('tit').textContent = 'Tu pedido está reservado';
+    document.getElementById('baj').textContent = medio === 'yape'
+      ? 'Escanea el código desde tu app de Yape para completar el pago.'
+      : 'Paga tu código CIP en un agente, banco o desde tu app bancaria.';
+
+    var z = document.getElementById('zonaPago');
+    if(medio === 'yape'){
+      z.innerHTML = '<div class="qr">' + S.qr + '</div>' +
+        '<p style="margin:0;font-size:13px;color:var(--gris)">Vence en 10 minutos</p>';
+    } else {
+      z.innerHTML = '<p class="cip">' + String(est.pedido).replace(/\D/g,'') + '0</p>' +
+        '<p style="margin:0;font-size:13px;color:var(--gris)">Código CIP · vence en 24 horas</p>';
+    }
+    z.insertAdjacentHTML('beforeend',
+      '<div class="avisoPago">Apenas Mercado Pago confirme el pago, <b>tu pedido se procesa solo</b>: ' +
+      'no hace falta que envíes ninguna constancia ni que nadie revise la cuenta a mano.</div>');
+  }
+
+  var lineas = [
+    ['Correo', c && c.correo ? c.correo : '—'],
+    ['A nombre de', c ? (c.nombre + ' ' + c.apellido) : '—'],
+    [c && c.tipo === 'empresa' ? 'RUC' : 'DNI', c ? c.doc : '—'],
+    ['Entrega', e.modo === 'tienda' ? 'Retiro en Tienda Corlima'
+        : e.calle + (e.refe ? ', ' + e.refe : '') + ', ' + e.dist + ', ' + e.prov],
+    ['Modalidad', e.etiqueta || '—'],
+    ['Medio de pago', nombreMedio],
+    ['Productos', Tienda.money(t.bruto)],
+    ['Descuentos', '- ' + Tienda.money(t.descuento)]
+  ];
+  if(est.cupon) lineas.push(['Cupón ' + est.cupon.codigo, '- ' + Tienda.money(t.cupon)]);
+  lineas.push(['Envío', t.envio ? Tienda.money(t.envio) : 'Gratis']);
+
+  document.getElementById('datos').innerHTML =
+    lineas.map(function(l){ return '<div class="f"><span>' + l[0] + '</span><b>' + l[1] + '</b></div>'; }).join('') +
+    '<div class="f" style="border-top:1px solid var(--linea);margin-top:10px;padding-top:14px;font-size:17px">' +
+    '<span style="color:var(--tinta);font-weight:700">Total</span>' +
+    '<b style="font-size:20px">' + Tienda.money(t.total) + '</b></div>';
+
+  document.getElementById('volverInicio').onclick = function(){ Tienda.reiniciar(); };
+
+  // la cabecera se arma igual, pero sin pasos ni resumen
+  Tienda.iniciar(4, { boton:false, cupon:false });
+})();
+</script>
+</body>
+</html>

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<!--
-  Propuesta de rediseño del carrito de corlima.pe — documento de trabajo interno.
-  No es el sitio real: ningún formulario envía datos y la página no se indexa.
--->
+<!-- Propuesta de rediseño de la compra de corlima.pe — documento de trabajo interno.
+     No es el sitio real: nada envía datos y la página no se indexa. -->
 <html lang="es">
 <head>
 <meta charset="utf-8">
@@ -12,260 +10,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --azul:#0D287A;
-  --azul-osc:#00237D;
-  --azul-hover:#0A1F5E;
-  --celeste:#1B7BC9;
-  --tinta:#111111;
-  --gris:#5A6274;
-  --gris-suave:#8A91A3;
-  --linea:#E4E7EE;
-  --fondo:#F4F5F8;
-  --verde:#0F7B4F;
-  --rojo:#D42B2B;
-  --radio:10px;
-  --ancho:1600px;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:#fff;color:var(--tinta);
-  font:400 15px/1.5 Roboto,system-ui,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-button{font:inherit;color:inherit}
-a{color:inherit;text-decoration:none}
-:focus-visible{outline:2px solid var(--celeste);outline-offset:2px;border-radius:4px}
-.caja{max-width:var(--ancho);margin:0 auto;padding:0 20px}
-
-/* ===== barra superior ===== */
-.tope{background:var(--azul);color:#fff}
-.tope .caja{display:flex;align-items:center;gap:20px;height:42px}
-.rota{flex:1;display:flex;align-items:center;justify-content:center;gap:18px;font-size:13px;font-weight:500}
-.rota button{background:none;border:0;color:#fff;cursor:pointer;opacity:.75;padding:4px;line-height:0}
-.rota button:hover{opacity:1}
-.rota svg{width:13px;height:13px}
-.rota span{min-width:280px;text-align:center}
-.tope .pro{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;white-space:nowrap}
-.tope .pro svg{width:15px;height:15px}
-
-/* ===== cabecera ===== */
-.cab{background:#fff}
-.cab .caja{display:flex;align-items:center;gap:28px;padding-top:12px;padding-bottom:12px}
-/* el SVG del logo trae mucho margen transparente (el trazo ocupa 50% x 43%);
-   se compensa con margenes negativos para que ocupe lo mismo que en el sitio real.
-   flex:none y max-width:none evitan que el contenedor flex lo aplaste */
-.cab .marca{flex:none;line-height:0}
-.cab .marca img{height:138px;width:auto;max-width:none;margin:-39px -95px}
-.busca{flex:1;max-width:507px;margin:0 auto;position:relative}
-.busca input{width:100%;height:34px;border:0;border-radius:30px;background:#EBEBEB;
-  padding:0 44px 0 18px;font:inherit;font-size:13.5px;color:var(--tinta)}
-.busca input::placeholder{color:#9A9A9A}
-.busca button{position:absolute;right:4px;top:2px;width:30px;height:30px;border:0;border-radius:50%;
-  background:none;color:var(--azul);cursor:pointer;display:grid;place-items:center}
-.busca svg{width:17px;height:17px}
-.iconos{display:flex;align-items:center;gap:20px;color:var(--azul)}
-.iconos a{position:relative;display:block;line-height:0}
-.iconos svg{width:23px;height:23px}
-.globo{position:absolute;top:-6px;right:-8px;min-width:17px;height:17px;border-radius:50%;
-  background:var(--azul-osc);color:#fff;font-size:10.5px;font-weight:700;display:grid;place-items:center;padding:0 4px}
-
-/* ===== menu ===== */
-.menu{background:#fff;border-bottom:1px solid var(--linea)}
-.menu .caja{display:flex;align-items:center;justify-content:center;gap:26px;height:44px;flex-wrap:wrap}
-.menu a{font-size:14px;color:var(--tinta);white-space:nowrap}
-.menu a:hover{color:var(--azul)}
-.menu a.pro{background:var(--celeste);color:#fff;border-radius:20px;padding:5px 13px;font-weight:500}
-.menu a.pro:hover{background:#1668AC;color:#fff}
-
-/* ===== contenido ===== */
-.cuerpo{background:var(--fondo);padding:26px 0 60px;min-height:58vh}
-.titulo{display:flex;align-items:baseline;gap:11px;margin:0 0 18px}
-.titulo h1{font-size:25px;font-weight:700;margin:0;letter-spacing:-.01em}
-.titulo span{color:var(--gris);font-size:14px}
-.cols{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:start}
-
-.lista{background:#fff;border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden}
-.item{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:22px;padding:20px 22px;border-bottom:1px solid var(--linea)}
-.item:last-child{border-bottom:0}
-.item-img{width:120px;height:120px;background:var(--fondo);border-radius:8px;display:grid;place-items:center;overflow:hidden}
-.item-img img{max-height:100%;object-fit:contain}
-.nombre{font-size:15.5px;font-weight:500;line-height:1.35;margin:0 0 9px;display:inline-block;max-width:52ch}
-.nombre:hover{color:var(--azul)}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-.tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;
-  padding:3px 9px;border-radius:20px;background:#EAF3EE;color:var(--verde)}
-.tag.tienda{background:#EDF1FA;color:var(--azul)}
-.tag svg{width:13px;height:13px;flex:none}
-.precios{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.p-final{font-size:20px;font-weight:700;letter-spacing:-.01em}
-.p-viejo{font-size:13px;color:var(--gris-suave);text-decoration:line-through}
-.p-off{font-size:11.5px;font-weight:700;color:#fff;background:var(--rojo);border-radius:5px;padding:2px 6px}
-.derecha{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:16px}
-.quitar{background:none;border:0;padding:6px;cursor:pointer;color:var(--gris-suave);border-radius:6px;line-height:0}
-.quitar:hover{color:var(--rojo);background:#FDEDED}
-.quitar svg{width:18px;height:18px}
-.stepper{display:flex;align-items:center;border:1px solid var(--linea);border-radius:22px;overflow:hidden;background:#fff}
-.stepper button{width:36px;height:36px;border:0;background:#fff;cursor:pointer;color:var(--azul);display:grid;place-items:center;line-height:0}
-.stepper button:hover:not(:disabled){background:var(--fondo)}
-.stepper button:disabled{color:#C7CBD6;cursor:not-allowed}
-.stepper svg{width:14px;height:14px}
-.stepper .n{min-width:36px;text-align:center;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
-
-.resumen{position:sticky;top:20px;background:#fff;border:1px solid var(--linea);border-radius:var(--radio);padding:22px}
-.resumen h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gris);margin:0 0 17px}
-.fila{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:7px 0;font-size:14px;color:var(--gris)}
-.fila b{color:var(--tinta);font-weight:500;font-variant-numeric:tabular-nums}
-.fila.ahorro,.fila.ahorro b{color:var(--verde)}
-.fila.envio b{color:var(--verde);font-weight:700}
-.total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-top:1px solid var(--linea);margin-top:12px;padding-top:15px}
-.total span{font-size:16px;font-weight:700}
-.total b{font-size:25px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.cta{display:block;width:100%;margin:17px 0 0;background:var(--azul);color:#fff;border:0;border-radius:var(--radio);
-  padding:15px 18px;font-size:16px;font-weight:500;cursor:pointer;text-align:center;transition:background .15s}
-.cta:hover{background:var(--azul-hover);color:#fff}
-.pasos{display:flex;align-items:center;gap:6px;margin-top:15px;padding-top:14px;border-top:1px dashed var(--linea);
-  font-size:12px;color:var(--gris-suave);justify-content:center;flex-wrap:wrap}
-.pasos i{font-style:normal;display:inline-flex;align-items:center;gap:5px}
-.pasos u{text-decoration:none;width:17px;height:17px;border-radius:50%;background:var(--fondo);color:var(--gris);
-  display:grid;place-items:center;font-size:10.5px;font-weight:700}
-.pasos .sep{color:#C7CBD6}
-.cupon{margin-top:16px;border-top:1px solid var(--linea);padding-top:15px}
-.cupon-btn{background:none;border:0;padding:0;color:var(--azul);font-size:13.5px;cursor:pointer;text-decoration:underline}
-.cupon-box{display:none;gap:8px;margin-top:11px}
-.cupon-box.abierto{display:flex}
-.cupon-box input{flex:1;min-width:0;border:1px solid var(--linea);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px}
-.cupon-box button{border:1px solid var(--azul);background:#fff;color:var(--azul);border-radius:8px;padding:0 16px;font-weight:500;cursor:pointer}
-.pago{display:flex;align-items:center;gap:8px;margin-top:15px;font-size:12px;color:var(--gris-suave);line-height:1.4}
-.pago svg{width:15px;height:15px;flex:none}
-.seguir{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--azul);font-size:14px;font-weight:500}
-.seguir:hover{text-decoration:underline}
-.seguir svg{width:15px;height:15px}
-.vacio{padding:52px 20px;text-align:center;color:var(--gris)}
-.vacio p{margin:0 0 16px}
-
-/* ===== pie ===== */
-.pie{background:var(--azul);color:#fff;padding:40px 0 34px}
-.pie .caja{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
-.pie h3{font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin:0 0 12px}
-.pie ul{list-style:none;margin:0 0 22px;padding:0}
-.pie li{margin-bottom:7px}
-.pie li a{font-size:11.5px;opacity:.92}
-.pie li a:hover{opacity:1;text-decoration:underline}
-.news p{font-size:11.5px;margin:0 0 10px;opacity:.92}
-.news form{display:flex;max-width:290px}
-.news input{flex:1;min-width:0;border:0;border-radius:4px 0 0 4px;padding:9px 12px;font:inherit;font-size:12.5px}
-.news button{border:0;background:#fff;color:var(--tinta);border-left:1px solid var(--linea);
-  border-radius:0 4px 4px 0;padding:0 16px;font-size:12.5px;cursor:pointer}
-.redes{display:flex;gap:10px;margin-top:20px}
-.redes a{width:28px;height:28px;border:1.4px solid #fff;border-radius:50%;display:grid;place-items:center}
-.redes a:hover{background:#fff;color:var(--azul)}
-.redes svg{width:14px;height:14px}
-.pie .caja.ccl{margin-top:26px;display:flex;justify-content:flex-end}
-.pie .caja.ccl img{height:44px;width:auto;opacity:.95}
-
-/* ===== whatsapp ===== */
-.wa{position:fixed;right:18px;bottom:18px;z-index:600;display:flex;flex-direction:column;gap:11px}
-.wa a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;
-  box-shadow:0 3px 12px rgba(0,0,0,.22)}
-.wa .v{background:#25D366}
-.wa .a{background:var(--azul)}
-.wa svg{width:24px;height:24px}
-
-/* ===== pie de documento ===== */
-.doc{background:#fff;padding:14px 0 18px;font-size:11px;color:#B4B9C6;text-align:center}
-.doc a{color:#9AA0AF;text-decoration:underline}
-
-/* ===== deshacer / movil ===== */
-.undo{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:800;background:var(--tinta);color:#fff;
-  border-radius:var(--radio);padding:12px 16px;display:flex;align-items:center;gap:14px;font-size:14px;
-  box-shadow:0 8px 30px rgba(0,0,0,.25);transition:transform .22s ease,opacity .22s ease;
-  max-width:calc(100vw - 32px);opacity:0;visibility:hidden}
-.undo.ver{transform:translate(-50%,0);opacity:1;visibility:visible}
-.undo button{background:none;border:0;color:#8FB4FF;font-weight:700;cursor:pointer;text-decoration:underline}
-.movil{position:fixed;inset:auto 0 0 0;z-index:700;background:#fff;border-top:1px solid var(--linea);
-  padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:14px;
-  box-shadow:0 -4px 20px rgba(13,40,122,.10)}
-.movil .m-t{font-size:12px;color:var(--gris)}
-.movil .m-n{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
-.movil .cta{margin:0;flex:1;padding:13px 16px}
-
-@media (max-width:1100px){
-  .cols{grid-template-columns:minmax(0,1fr) 340px}
-  .pie .caja{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}
-  .pie .caja.ccl{justify-content:flex-start}
-}
-@media (max-width:960px){
-  .cols{grid-template-columns:1fr}
-  .resumen{position:static}
-  .resumen .cta{display:none}
-  .movil{display:flex}
-  .cuerpo{padding-bottom:90px}
-  .wa{bottom:76px}
-  .menu .caja{justify-content:flex-start;gap:18px;overflow-x:auto;height:auto;padding-top:10px;padding-bottom:10px}
-  .menu a{font-size:13px}
-}
-@media (max-width:640px){
-  .cab .caja{flex-wrap:wrap;gap:14px}
-  .cab .marca img{height:104px;margin:-30px -72px}
-  .busca{order:3;flex-basis:100%;max-width:none}
-  .iconos{margin-left:auto}
-  .tope .rota span{min-width:0}
-  .tope .pro{display:none}
-  .item{grid-template-columns:88px minmax(0,1fr);gap:15px;padding:16px}
-  .item-img{width:88px;height:88px}
-  .derecha{grid-column:1/-1;flex-direction:row-reverse;align-items:center;justify-content:space-between}
-  .pie .caja{grid-template-columns:1fr}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-</style>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
-<div class="tope">
-  <div class="caja">
-    <div class="rota">
-      <button type="button" id="ant" aria-label="Mensaje anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 5l-7 7 7 7"/></svg></button>
-      <span id="msg">Entrega hasta en 48 horas</span>
-      <button type="button" id="sig" aria-label="Mensaje siguiente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 5l7 7-7 7"/></svg></button>
-    </div>
-    <a class="pro" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 21h10M6 13a4 4 0 0 1 1-7.9A4 4 0 0 1 12 3a4 4 0 0 1 5 2.1A4 4 0 0 1 18 13z"/><path d="M6 13v4h12v-4"/></svg>
-      IR A CORLIMA PROFESIONAL
-    </a>
-  </div>
-</div>
-
-<header class="cab">
-  <div class="caja">
-    <a class="marca" href="../index.html"><img src="https://www.corlima.pe/themes/childtheme/assets/img/logo-header-desk.svg" alt="Corlima"></a>
-    <div class="busca">
-      <input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">
-      <button type="button" aria-label="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>
-    </div>
-    <div class="iconos">
-      <a href="#" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></a>
-      <a href="#" aria-label="Carrito">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16l-1.4 9.3a2 2 0 0 1-2 1.7H7.4a2 2 0 0 1-2-1.7L4 6z"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
-        <span class="globo" id="globo">2</span>
-      </a>
-    </div>
-  </div>
-</header>
-
-<nav class="menu">
-  <div class="caja">
-    <a href="#">COCINA Y COCCIÓN</a>
-    <a href="#">MESA</a>
-    <a href="#">BAR</a>
-    <a href="#">ORGANIZACIÓN Y LIMPIEZA</a>
-    <a href="#">ELECTRODOMÉSTICOS</a>
-    <a class="pro" href="#">CORLIMA PROFESIONAL</a>
-  </div>
-</nav>
-
 <main class="cuerpo">
   <div class="caja">
+    <div data-pasos></div>
+
     <div class="titulo">
       <h1>Tu carro</h1>
       <span id="cuenta">2 productos</span>
@@ -273,93 +25,19 @@ a{color:inherit;text-decoration:none}
 
     <div class="cols">
       <section class="lista" id="lista" aria-label="Productos en el carro"></section>
-
-      <aside class="resumen" aria-label="Resumen de la orden">
-        <h2>Resumen de la orden</h2>
-        <div class="fila"><span>Productos (<span id="nProd">2</span>)</span><b id="sProd">S/ 1.998,00</b></div>
-        <div class="fila ahorro"><span>Descuentos</span><b id="sDesc">- S/ 550,00</b></div>
-        <div class="fila envio"><span>Envío</span><b>Gratis</b></div>
-        <div class="total"><span>Total</span><b id="sTotal" aria-live="polite">S/ 1.448,00</b></div>
-
-        <button class="cta" type="button" id="ctaDesk">Continuar compra</button>
-
-        <div class="pasos">
-          <i><u>1</u> Tus datos</i><span class="sep">›</span>
-          <i><u>2</u> Entrega</i><span class="sep">›</span>
-          <i><u>3</u> Pago</i>
-        </div>
-
-        <div class="cupon">
-          <button class="cupon-btn" id="cuponBtn" aria-expanded="false">¿Tienes un cupón?</button>
-          <div class="cupon-box" id="cuponBox">
-            <input type="text" placeholder="Código del cupón" aria-label="Código del cupón">
-            <button type="button">Aplicar</button>
-          </div>
-        </div>
-
-        <p class="pago">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-          Pago seguro procesado por Mercado Pago
-        </p>
-      </aside>
+      <aside class="resumen" data-resumen aria-label="Resumen de la orden"></aside>
     </div>
 
-    <a class="seguir" href="#">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>
-      Seguir comprando
-    </a>
+    <a class="volver" href="#" id="seguir"></a>
   </div>
 </main>
-
-<footer class="pie">
-  <div class="caja">
-    <div>
-      <h3>Sobre nosotros</h3>
-      <ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Contacto con nosotros</a></li></ul>
-      <h3>Su cuenta</h3>
-      <ul><li><a href="#">Mi cuenta</a></li><li><a href="#">Sigue tu pedido</a></li></ul>
-    </div>
-    <div>
-      <h3>Servicios</h3>
-      <ul>
-        <li><a href="#">Libro de reclamaciones</a></li>
-        <li><a href="#">Lista de cobertura</a></li>
-        <li><a href="#">Protocolo recojo en tienda</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3>Legal</h3>
-      <ul><li><a href="#">Términos y condiciones</a></li><li><a href="#">Pago seguro</a></li></ul>
-    </div>
-    <div class="news">
-      <p>Ingresa tu correo y recibe nuestras Ofertas</p>
-      <form onsubmit="return false">
-        <input type="email" placeholder="Ingresa tu correo" aria-label="Tu correo">
-        <button type="submit">Enviar</button>
-      </form>
-      <h3 style="margin-top:22px">Síguenos</h3>
-      <div class="redes">
-        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-2.8h-2.7V9.4c0-.8.2-1.4 1.4-1.4h1.4V5.5c-.3 0-1.2-.1-2.2-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.2V14h2.3v7z"/></svg></a>
-        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="16.9" cy="7.1" r="1" fill="currentColor" stroke="none"/></svg></a>
-      </div>
-    </div>
-  </div>
-  <div class="caja ccl">
-    <img src="https://www.corlima.pe/assets/img/logo_asociados_1.png" alt="Cámara de Comercio de Lima — Asociado">
-  </div>
-</footer>
-
-<div class="wa">
-  <a class="v" href="#" aria-label="Escríbenos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 0 1 12 3.8m-3.3 4c-.2 0-.5.1-.7.4s-.9.9-.9 2.2.9 2.6 1 2.8c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7s1.6-.6 1.8-1.3c.2-.6.2-1.2.2-1.3l-.6-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1s-1.1-.4-2-1.3c-.7-.6-1.2-1.4-1.3-1.7s0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg></a>
-  <a class="a" href="#" aria-label="Atención al cliente por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 0 1 12 3.8m-3.3 4c-.2 0-.5.1-.7.4s-.9.9-.9 2.2.9 2.6 1 2.8c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7s1.6-.6 1.8-1.3c.2-.6.2-1.2.2-1.3l-.6-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1s-1.1-.4-2-1.3c-.7-.6-1.2-1.4-1.3-1.7s0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg></a>
-</div>
 
 <div class="movil">
   <div>
     <div class="m-t">Total</div>
-    <div class="m-n" id="mTotal">S/ 1.448,00</div>
+    <div class="m-n" id="mTotal">S/ 0,00</div>
   </div>
-  <button class="cta" type="button">Continuar compra</button>
+  <button class="cta" type="button" id="ctaMovil">Continuar compra</button>
 </div>
 
 <div class="undo" id="undo" role="status">
@@ -367,90 +45,63 @@ a{color:inherit;text-decoration:none}
   <button type="button" id="undoBtn">Deshacer</button>
 </div>
 
-<div class="doc">Propuesta de rediseño del carrito &middot; documento de trabajo &middot; <a href="../index.html">volver al índice</a></div>
-
+<script src="tienda.js"></script>
 <script>
 (function(){
-  var ICO = {
-    camion:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>',
-    tienda:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 9h16v11H4zM3 9l1.5-4h15L21 9"/><path d="M10 20v-6h4v6"/></svg>',
-    menos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/></svg>',
-    mas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>',
-    tacho:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>'
-  };
-
-  var items = [
-    { id:1, nombre:'Horno de doble convección con Air Fry 28 L — Black Matte',
-      img:'https://www.corlima.pe/2603-cart_default/horno-de-doble-conveccion-con-air-fry-28-l-black-matte.jpg',
-      precio:899, original:1299, qty:1 },
-    { id:2, nombre:'Hervidor eléctrico de 1.7 L Empire Red',
-      img:'https://www.corlima.pe/2582-cart_default/hervidor-electrico-de-17-l-empire-red.jpg',
-      precio:549, original:699, qty:1 }
-  ];
+  var S = Tienda.SVG, est = Tienda.estado;
   var quitado = null, timer = null;
 
-  function money(n){
-    return 'S/ ' + n.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d)(?=,))/g, '.');
-  }
+  document.getElementById('seguir').innerHTML = S.izq + ' Seguir comprando';
+
   function off(it){ return Math.round((1 - it.precio / it.original) * 100); }
 
   function pintar(){
     var lista = document.getElementById('lista');
-    if(!items.length){
-      lista.innerHTML = '<div class="vacio"><p>Tu carro está vacío.</p>' +
-        '<button class="cta" type="button" style="max-width:240px;margin:0 auto">Ver productos</button></div>';
+    if(!est.items.length){
+      lista.innerHTML = '<div class="vacio"><p>Tu carro está vacío.</p>'+
+        '<button class="cta" type="button" style="max-width:240px;margin:0 auto" onclick="location.reload()">Ver productos</button></div>';
     } else {
-      lista.innerHTML = items.map(function(it){
-        return '<article class="item">' +
-          '<div class="item-img"><img src="' + it.img + '" alt="" loading="lazy"></div>' +
-          '<div>' +
-            '<a class="nombre" href="#">' + it.nombre + '</a>' +
-            '<div class="tags">' +
-              '<span class="tag">' + ICO.camion + 'Llega mañana</span>' +
-              '<span class="tag tienda">' + ICO.tienda + 'Retira hoy en tienda</span>' +
-            '</div>' +
-            '<div class="precios">' +
-              '<span class="p-final">' + money(it.precio * it.qty) + '</span>' +
-              '<span class="p-viejo">' + money(it.original * it.qty) + '</span>' +
-              '<span class="p-off">-' + off(it) + '%</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="derecha">' +
-            '<button class="quitar" data-quitar="' + it.id + '" aria-label="Quitar ' + it.nombre + '">' + ICO.tacho + '</button>' +
-            '<div class="stepper">' +
-              '<button data-menos="' + it.id + '" aria-label="Quitar una unidad"' + (it.qty <= 1 ? ' disabled' : '') + '>' + ICO.menos + '</button>' +
-              '<span class="n">' + it.qty + '</span>' +
-              '<button data-mas="' + it.id + '" aria-label="Agregar una unidad">' + ICO.mas + '</button>' +
-            '</div>' +
-          '</div>' +
-        '</article>';
+      lista.innerHTML = est.items.map(function(it){
+        return '<article class="item">'+
+          '<div class="item-img"><img src="'+it.img+'" alt="" loading="lazy"></div>'+
+          '<div><a class="nombre" href="#">'+it.nombre+'</a>'+
+            '<div class="tags"><span class="tag">'+S.camion+'Llega mañana</span>'+
+            '<span class="tag tienda">'+S.tienda+'Retira hoy en tienda</span></div>'+
+            '<div class="precios"><span class="p-final">'+Tienda.money(it.precio*it.qty)+'</span>'+
+            '<span class="p-viejo">'+Tienda.money(it.original*it.qty)+'</span>'+
+            '<span class="p-off">-'+off(it)+'%</span></div></div>'+
+          '<div class="derecha">'+
+            '<button class="quitar" data-quitar="'+it.id+'" aria-label="Quitar '+it.nombre+'">'+S.tacho+'</button>'+
+            '<div class="stepper">'+
+              '<button data-menos="'+it.id+'" aria-label="Quitar una unidad"'+(it.qty<=1?' disabled':'')+'>'+S.menos+'</button>'+
+              '<span class="n">'+it.qty+'</span>'+
+              '<button data-mas="'+it.id+'" aria-label="Agregar una unidad">'+S.mas+'</button>'+
+            '</div></div></article>';
       }).join('');
     }
-    totales();
+    refrescar();
   }
 
-  function totales(){
-    var u = 0, bruto = 0, neto = 0;
-    items.forEach(function(it){ u += it.qty; bruto += it.original * it.qty; neto += it.precio * it.qty; });
-    document.getElementById('cuenta').textContent = u === 1 ? '1 producto' : u + ' productos';
-    document.getElementById('nProd').textContent = u;
-    document.getElementById('globo').textContent = u;
-    document.getElementById('sProd').textContent = money(bruto);
-    document.getElementById('sDesc').textContent = '- ' + money(bruto - neto);
-    document.getElementById('sTotal').textContent = money(neto);
-    document.getElementById('mTotal').textContent = money(neto);
+  function refrescar(){
+    var t = Tienda.resumen({
+      texto:'Continuar compra',
+      activo: est.items.length > 0,
+      alSeguir: function(){ Tienda.irA('entrega.html'); }
+    });
+    document.getElementById('cuenta').textContent = t.unidades === 1 ? '1 producto' : t.unidades + ' productos';
+    Tienda.guardar();
   }
 
   document.addEventListener('click', function(e){
     var b = e.target.closest('button'); if(!b) return;
     var id;
     if((id = b.getAttribute('data-mas'))){
-      items.forEach(function(it){ if(it.id == id) it.qty++; }); pintar();
+      est.items.forEach(function(it){ if(it.id == id) it.qty++; }); pintar();
     } else if((id = b.getAttribute('data-menos'))){
-      items.forEach(function(it){ if(it.id == id && it.qty > 1) it.qty--; }); pintar();
+      est.items.forEach(function(it){ if(it.id == id && it.qty > 1) it.qty--; }); pintar();
     } else if((id = b.getAttribute('data-quitar'))){
-      var i = items.findIndex(function(it){ return it.id == id; });
-      if(i > -1){ quitado = { it: items[i], i: i }; items.splice(i, 1); pintar(); avisar(); }
+      var i = est.items.findIndex(function(it){ return it.id == id; });
+      if(i > -1){ quitado = { it: est.items[i], i: i }; est.items.splice(i,1); pintar(); avisar(); }
     }
   });
 
@@ -461,31 +112,15 @@ a{color:inherit;text-decoration:none}
     clearTimeout(timer);
     timer = setTimeout(function(){ u.classList.remove('ver'); quitado = null; }, 6000);
   }
-  document.getElementById('undoBtn').addEventListener('click', function(){
+  document.getElementById('undoBtn').onclick = function(){
     if(!quitado) return;
-    items.splice(quitado.i, 0, quitado.it); quitado = null;
+    est.items.splice(quitado.i, 0, quitado.it); quitado = null;
     document.getElementById('undo').classList.remove('ver'); pintar();
-  });
-
-  var cb = document.getElementById('cuponBtn');
-  cb.addEventListener('click', function(){
-    var box = document.getElementById('cuponBox');
-    var ab = box.classList.toggle('abierto');
-    cb.setAttribute('aria-expanded', ab);
-    if(ab) box.querySelector('input').focus();
-  });
-
-  // mensajes de la barra superior
-  var msgs = ['Entrega hasta en 48 horas','Despacho a domicilio en todo PERÚ','Atención al cliente personalizada'];
-  var mi = 0, el = document.getElementById('msg');
-  function ver(n){ mi = (n + msgs.length) % msgs.length; el.textContent = msgs[mi]; }
-  document.getElementById('ant').addEventListener('click', function(){ ver(mi - 1); });
-  document.getElementById('sig').addEventListener('click', function(){ ver(mi + 1); });
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    setInterval(function(){ ver(mi + 1); }, 5000);
-  }
+  };
 
   document.addEventListener('submit', function(e){ e.preventDefault(); });
+
+  Tienda.iniciar(1, { texto:'Continuar compra', activo:false });
   pintar();
 })();
 </script>
