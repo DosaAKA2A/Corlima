@@ -1,0 +1,11 @@
+# SO / editor
+Thumbs.db
+.DS_Store
+*.swp
+.vscode/
+.idea/
+
+# temporales
+*.tmp
+*.log
+node_modules/
