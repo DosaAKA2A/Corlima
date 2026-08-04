@@ -60,3 +60,15 @@ pequeño en medio. Ver `docs/FLUJO.md` y `docs/RECOMENDACIONES.md`.
 Son archivos HTML sueltos; las rutas de CSS/JS apuntan al dominio de producción,
 así que para verlas con estilos hace falta conexión (cargan los assets desde
 corlima.pe). Ábrelas en el navegador directamente.
+
+## Simulación navegable (GitHub Pages)
+
+`index.html` (raíz) es la portada del prototipo; `flujo/` contiene cada vista con
+una barra superior de navegación entre pasos, `noindex`, envío de formularios
+desactivado y bloqueo de salida al sitio real. Se genera con:
+
+```
+node build-prototipo.js
+```
+
+`capturas/` se mantiene como referencia intacta; `flujo/` es lo que sirve Pages.
