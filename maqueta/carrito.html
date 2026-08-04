@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Maqueta de carrito — Corlima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0D287A;        /* azul Corlima, tomado del sitio real */
+  --azul-hover:#0A1F5E;
+  --tinta:#111111;
+  --gris:#5A6274;
+  --gris-suave:#8A91A3;
+  --linea:#E4E7EE;
+  --fondo:#F4F5F8;
+  --verde:#0F7B4F;
+  --rojo:#D42B2B;
+  --radio:10px;          /* radio real de los botones del sitio */
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--fondo);color:var(--tinta);
+  font:400 15px/1.5 Roboto,system-ui,"Segoe UI",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+a{color:var(--azul)}
+:focus-visible{outline:2px solid var(--azul);outline-offset:2px;border-radius:4px}
+
+/* ---------- barra de prototipo ---------- */
+.proto{position:fixed;inset:0 0 auto 0;z-index:900;background:#0d1b3e;color:#fff;
+  display:flex;align-items:center;gap:10px 16px;padding:7px 16px;flex-wrap:wrap;font-size:12.5px}
+.proto b{color:#ffd23f;letter-spacing:.06em}
+.proto nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.proto a{color:#cdd6f4;text-decoration:none;padding:3px 9px;border-radius:6px;font-size:12px}
+.proto a:hover{background:rgba(255,255,255,.14)}
+.proto a.on{background:#ffd23f;color:#0d1b3e;font-weight:700}
+
+/* ---------- cabecera ---------- */
+.top{background:var(--azul);color:#fff;font-size:12.5px;text-align:center;padding:9px 16px;margin-top:46px}
+.head{background:#fff;border-bottom:1px solid var(--linea)}
+.head-in{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:20px}
+.head img{height:34px;width:auto}
+.buscar{flex:1;max-width:520px;display:flex;align-items:center;gap:8px;
+  background:var(--fondo);border:1px solid var(--linea);border-radius:22px;padding:8px 14px;color:var(--gris-suave);font-size:13.5px}
+.head-ic{margin-left:auto;display:flex;gap:16px;color:var(--azul)}
+
+/* ---------- estructura ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding:24px 20px 120px}
+.titulo{display:flex;align-items:baseline;gap:10px;margin:0 0 16px}
+.titulo h1{font-size:24px;font-weight:700;margin:0;letter-spacing:-.01em}
+.titulo span{color:var(--gris);font-size:14px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:22px;align-items:start}
+
+/* ---------- items ---------- */
+.lista{background:#fff;border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden}
+.item{display:grid;grid-template-columns:104px minmax(0,1fr) auto;gap:18px;padding:18px;border-bottom:1px solid var(--linea)}
+.item:last-child{border-bottom:0}
+.item-img{width:104px;height:104px;background:var(--fondo);border-radius:8px;display:grid;place-items:center;overflow:hidden}
+.item-img img{max-height:100%;object-fit:contain}
+.nombre{font-size:15px;font-weight:500;line-height:1.35;margin:0 0 8px;color:var(--tinta);text-decoration:none;display:inline-block}
+.nombre:hover{color:var(--azul)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;
+  padding:3px 9px;border-radius:20px;background:#EAF3EE;color:var(--verde)}
+.tag.tienda{background:#EDF1FA;color:var(--azul)}
+.tag svg{width:13px;height:13px;flex:none}
+.precios{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.p-final{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.p-viejo{font-size:13px;color:var(--gris-suave);text-decoration:line-through}
+.p-off{font-size:11.5px;font-weight:700;color:#fff;background:var(--rojo);border-radius:5px;padding:2px 6px}
+.derecha{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:14px}
+.quitar{background:none;border:0;padding:6px;cursor:pointer;color:var(--gris-suave);border-radius:6px;line-height:0}
+.quitar:hover{color:var(--rojo);background:#FDEDED}
+.quitar svg{width:17px;height:17px}
+.stepper{display:flex;align-items:center;border:1px solid var(--linea);border-radius:22px;overflow:hidden;background:#fff}
+.stepper button{width:34px;height:34px;border:0;background:#fff;cursor:pointer;color:var(--azul);
+  display:grid;place-items:center;line-height:0}
+.stepper button:hover:not(:disabled){background:var(--fondo)}
+.stepper button:disabled{color:#C7CBD6;cursor:not-allowed}
+.stepper svg{width:14px;height:14px}
+.stepper .n{min-width:34px;text-align:center;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
+
+/* ---------- resumen ---------- */
+.resumen{position:sticky;top:76px;background:#fff;border:1px solid var(--linea);border-radius:var(--radio);padding:20px}
+.resumen h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gris);margin:0 0 16px}
+.fila{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:7px 0;font-size:14px;color:var(--gris)}
+.fila b{color:var(--tinta);font-weight:500;font-variant-numeric:tabular-nums}
+.fila.ahorro b,.fila.ahorro{color:var(--verde)}
+.fila.envio b{color:var(--verde);font-weight:700}
+.total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  border-top:1px solid var(--linea);margin-top:12px;padding-top:14px}
+.total span{font-size:16px;font-weight:700}
+.total b{font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.cta{display:block;width:100%;margin:16px 0 0;background:var(--azul);color:#fff;border:0;
+  border-radius:var(--radio);padding:15px 18px;font-size:16px;font-weight:500;cursor:pointer;text-align:center;
+  text-decoration:none;transition:background .15s}
+.cta:hover{background:var(--azul-hover)}
+
+/* firma: el camino corto */
+.sinCuenta{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:12px;
+  font-size:13.5px;font-weight:500;color:var(--verde)}
+.sinCuenta svg{width:15px;height:15px;flex:none}
+.pasos{display:flex;align-items:center;gap:6px;margin-top:10px;padding-top:12px;border-top:1px dashed var(--linea);
+  font-size:12px;color:var(--gris-suave);justify-content:center;flex-wrap:wrap}
+.pasos i{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.pasos u{text-decoration:none;width:17px;height:17px;border-radius:50%;background:var(--fondo);
+  color:var(--gris);display:grid;place-items:center;font-size:10.5px;font-weight:700}
+.pasos .sep{color:#C7CBD6}
+
+.cupon{margin-top:16px;border-top:1px solid var(--linea);padding-top:14px}
+.cupon-btn{background:none;border:0;padding:0;color:var(--azul);font-size:13.5px;cursor:pointer;text-decoration:underline}
+.cupon-box{display:none;gap:8px;margin-top:10px}
+.cupon-box.abierto{display:flex}
+.cupon-box input{flex:1;min-width:0;border:1px solid var(--linea);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px}
+.cupon-box button{border:1px solid var(--azul);background:#fff;color:var(--azul);border-radius:8px;padding:0 16px;font-weight:500;cursor:pointer}
+
+.pago{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:12px;color:var(--gris-suave);line-height:1.4}
+.pago svg{width:15px;height:15px;flex:none}
+
+.seguir{display:inline-flex;align-items:center;gap:7px;margin-top:16px;color:var(--azul);
+  text-decoration:none;font-size:14px;font-weight:500}
+.seguir:hover{text-decoration:underline}
+.seguir svg{width:15px;height:15px}
+
+/* ---------- deshacer ---------- */
+.undo{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);z-index:800;
+  background:var(--tinta);color:#fff;border-radius:var(--radio);padding:12px 16px;
+  display:flex;align-items:center;gap:14px;font-size:14px;box-shadow:0 8px 30px rgba(0,0,0,.25);
+  transition:transform .22s ease,opacity .22s ease;max-width:calc(100vw - 32px);
+  opacity:0;visibility:hidden}
+.undo.ver{transform:translate(-50%,0);opacity:1;visibility:visible}
+.undo button{background:none;border:0;color:#8FB4FF;font-weight:700;cursor:pointer;text-decoration:underline}
+
+/* ---------- barra movil ---------- */
+.movil{position:fixed;inset:auto 0 0 0;z-index:700;background:#fff;border-top:1px solid var(--linea);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:none;align-items:center;gap:14px;
+  box-shadow:0 -4px 20px rgba(13,40,122,.10)}
+.movil .m-t{font-size:12px;color:var(--gris)}
+.movil .m-n{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.movil .cta{margin:0;flex:1;padding:13px 16px}
+
+.vacio{padding:48px 20px;text-align:center;color:var(--gris)}
+.vacio p{margin:0 0 16px}
+
+@media (max-width:960px){
+  .cols{grid-template-columns:1fr}
+  .resumen{position:static}
+  .resumen #ctaDesk{display:none}
+  .resumen .sinCuenta{margin-top:14px}
+  .movil{display:flex}
+  .wrap{padding-bottom:96px}
+}
+@media (max-width:560px){
+  .head .buscar{display:none}
+  .item{grid-template-columns:80px minmax(0,1fr);gap:14px;padding:16px}
+  .item-img{width:80px;height:80px}
+  .derecha{grid-column:1/-1;flex-direction:row-reverse;align-items:center;justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="proto">
+  <span><b>MAQUETA</b> &middot; propuesta de carrito para Corlima &middot; no es el sitio real</span>
+  <nav>
+    <a href="../flujo/04-carrito.html">Carrito actual</a>
+    <a href="#" class="on">Propuesta</a>
+    <a href="../index.html">Inicio</a>
+  </nav>
+</div>
+
+<div class="top">Despacho a todo el Perú &middot; Retiro en tienda disponible</div>
+
+<header class="head">
+  <div class="head-in">
+    <img src="https://www.corlima.pe/themes/childtheme/assets/img/logo-header-desk.svg" alt="Corlima">
+    <div class="buscar" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      ¿Qué estás buscando?
+    </div>
+    <div class="head-ic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="21" height="21"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" width="21" height="21"><path d="M4 6h16l-1.4 9.3a2 2 0 0 1-2 1.7H7.4a2 2 0 0 1-2-1.7L4 6z"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="titulo">
+    <h1>Tu carro</h1>
+    <span id="cuenta">2 productos</span>
+  </div>
+
+  <div class="cols">
+    <section class="lista" id="lista" aria-label="Productos en el carro"></section>
+
+    <aside class="resumen" aria-label="Resumen de la orden">
+      <h2>Resumen de la orden</h2>
+      <div class="fila"><span>Productos (<span id="nProd">2</span>)</span><b id="sProd">S/ 1.998,00</b></div>
+      <div class="fila ahorro"><span>Descuentos</span><b id="sDesc">- S/ 550,00</b></div>
+      <div class="fila envio"><span>Envío</span><b>Gratis</b></div>
+      <div class="total"><span>Total</span><b id="sTotal" aria-live="polite">S/ 1.448,00</b></div>
+
+      <a class="cta" href="#" id="ctaDesk">Continuar compra</a>
+
+      <p class="sinCuenta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>
+        Compra sin crear una cuenta
+      </p>
+      <div class="pasos">
+        <i><u>1</u> Tus datos</i><span class="sep">›</span>
+        <i><u>2</u> Entrega</i><span class="sep">›</span>
+        <i><u>3</u> Pago</i>
+      </div>
+
+      <div class="cupon">
+        <button class="cupon-btn" id="cuponBtn" aria-expanded="false">¿Tienes un cupón?</button>
+        <div class="cupon-box" id="cuponBox">
+          <input type="text" placeholder="Código del cupón" aria-label="Código del cupón">
+          <button type="button">Aplicar</button>
+        </div>
+      </div>
+
+      <p class="pago">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Pago seguro procesado por Mercado Pago
+      </p>
+    </aside>
+  </div>
+
+  <a class="seguir" href="../flujo/02-categoria.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg>
+    Seguir comprando
+  </a>
+</main>
+
+<div class="movil">
+  <div>
+    <div class="m-t">Total</div>
+    <div class="m-n" id="mTotal">S/ 1.448,00</div>
+  </div>
+  <a class="cta" href="#">Continuar compra</a>
+</div>
+
+<div class="undo" id="undo" role="status">
+  <span id="undoTxt">Producto quitado</span>
+  <button type="button" id="undoBtn">Deshacer</button>
+</div>
+
+<script>
+(function(){
+  var ICO = {
+    camion:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>',
+    tienda:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 9h16v11H4zM3 9l1.5-4h15L21 9"/><path d="M10 20v-6h4v6"/></svg>',
+    menos:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/></svg>',
+    mas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>',
+    tacho:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V5h6v2M6 7l1 13h10l1-13"/></svg>'
+  };
+
+  var items = [
+    { id:1, nombre:'Horno de doble convección con Air Fry 28 L — Black Matte',
+      img:'https://www.corlima.pe/2603-cart_default/horno-de-doble-conveccion-con-air-fry-28-l-black-matte.jpg',
+      precio:899, original:1299, qty:1, entrega:'ambos' },
+    { id:2, nombre:'Hervidor eléctrico de 1.7 L Empire Red',
+      img:'https://www.corlima.pe/2582-cart_default/hervidor-electrico-de-17-l-empire-red.jpg',
+      precio:549, original:699, qty:1, entrega:'ambos' }
+  ];
+  var quitado = null, timer = null;
+
+  function money(n){
+    return 'S/ ' + n.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d)(?=,))/g, '.');
+  }
+  function off(it){ return Math.round((1 - it.precio / it.original) * 100); }
+
+  function pintar(){
+    var lista = document.getElementById('lista');
+    if(!items.length){
+      lista.innerHTML = '<div class="vacio"><p>Tu carro está vacío.</p>' +
+        '<a class="cta" style="max-width:240px;margin:0 auto" href="../flujo/02-categoria.html">Ver productos</a></div>';
+    } else {
+      lista.innerHTML = items.map(function(it){
+        return '<article class="item">' +
+          '<div class="item-img"><img src="' + it.img + '" alt="" loading="lazy"></div>' +
+          '<div>' +
+            '<a class="nombre" href="#">' + it.nombre + '</a>' +
+            '<div class="tags">' +
+              '<span class="tag">' + ICO.camion + 'Llega mañana</span>' +
+              '<span class="tag tienda">' + ICO.tienda + 'Retira hoy en tienda</span>' +
+            '</div>' +
+            '<div class="precios">' +
+              '<span class="p-final">' + money(it.precio * it.qty) + '</span>' +
+              '<span class="p-viejo">' + money(it.original * it.qty) + '</span>' +
+              '<span class="p-off">-' + off(it) + '%</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="derecha">' +
+            '<button class="quitar" data-quitar="' + it.id + '" aria-label="Quitar ' + it.nombre + '">' + ICO.tacho + '</button>' +
+            '<div class="stepper">' +
+              '<button data-menos="' + it.id + '" aria-label="Quitar una unidad"' + (it.qty <= 1 ? ' disabled' : '') + '>' + ICO.menos + '</button>' +
+              '<span class="n">' + it.qty + '</span>' +
+              '<button data-mas="' + it.id + '" aria-label="Agregar una unidad">' + ICO.mas + '</button>' +
+            '</div>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+    }
+    totales();
+  }
+
+  function totales(){
+    var u = 0, bruto = 0, neto = 0;
+    items.forEach(function(it){ u += it.qty; bruto += it.original * it.qty; neto += it.precio * it.qty; });
+    var txt = u === 1 ? '1 producto' : u + ' productos';
+    document.getElementById('cuenta').textContent = txt;
+    document.getElementById('nProd').textContent = u;
+    document.getElementById('sProd').textContent = money(bruto);
+    document.getElementById('sDesc').textContent = '- ' + money(bruto - neto);
+    document.getElementById('sTotal').textContent = money(neto);
+    document.getElementById('mTotal').textContent = money(neto);
+  }
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    var id;
+    if((id = b.getAttribute('data-mas'))){
+      items.forEach(function(it){ if(it.id == id) it.qty++; }); pintar();
+    } else if((id = b.getAttribute('data-menos'))){
+      items.forEach(function(it){ if(it.id == id && it.qty > 1) it.qty--; }); pintar();
+    } else if((id = b.getAttribute('data-quitar'))){
+      var i = items.findIndex(function(it){ return it.id == id; });
+      if(i > -1){ quitado = { it: items[i], i: i }; items.splice(i, 1); pintar(); avisar(); }
+    }
+  });
+
+  function avisar(){
+    var u = document.getElementById('undo');
+    document.getElementById('undoTxt').textContent = 'Quitaste "' + quitado.it.nombre.split('—')[0].trim() + '"';
+    u.classList.add('ver');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ u.classList.remove('ver'); quitado = null; }, 6000);
+  }
+  document.getElementById('undoBtn').addEventListener('click', function(){
+    if(!quitado) return;
+    items.splice(quitado.i, 0, quitado.it); quitado = null;
+    document.getElementById('undo').classList.remove('ver'); pintar();
+  });
+
+  var cb = document.getElementById('cuponBtn');
+  cb.addEventListener('click', function(){
+    var box = document.getElementById('cuponBox');
+    var ab = box.classList.toggle('abierto');
+    cb.setAttribute('aria-expanded', ab);
+    if(ab) box.querySelector('input').focus();
+  });
+
+  // maqueta: nada envía datos
+  document.addEventListener('submit', function(e){ e.preventDefault(); });
+
+  pintar();
+})();
+</script>
+</body>
+</html>
