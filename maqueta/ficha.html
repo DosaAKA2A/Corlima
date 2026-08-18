@@ -118,6 +118,25 @@
 .rel{border-top:1px solid var(--linea);padding:34px 0 60px}
 .rel h2{font-size:19px;font-weight:500;margin:0 0 4px}
 .rel .fp-sub{font-size:13.5px;color:var(--gris);margin:0 0 20px}
+/* --- aditamento en pareja --- */
+.combo{display:grid;grid-template-columns:132px minmax(0,1fr) auto;gap:22px;align-items:center;
+  border:1px solid var(--linea);border-radius:var(--radio);background:#fff;padding:18px 22px}
+.combo-im{width:132px;height:132px;display:grid;place-items:center}
+.combo-im img{max-width:100%;max-height:100%;object-fit:contain}
+.combo-tx .mk{font-size:11px;letter-spacing:.08em;color:var(--gris-suave);text-transform:uppercase}
+.combo-tx h3{font-size:16.5px;font-weight:500;margin:4px 0 6px}
+.combo-tx p{margin:0;font-size:13.5px;color:var(--gris);max-width:56ch;line-height:1.55}
+.combo-pr{display:flex;align-items:baseline;gap:9px;margin-top:10px;flex-wrap:wrap}
+.combo-pr b{font-size:20px}
+.combo-pr s{font-size:13px;color:var(--gris-suave)}
+.combo-pr .off{background:var(--rojo);color:#fff;font-size:11.5px;font-weight:700;
+  border-radius:4px;padding:2px 7px}
+.combo-ac{display:flex;flex-direction:column;gap:10px;align-items:stretch;min-width:210px}
+.combo-tot{text-align:right;line-height:1.25}
+.combo-tot span{display:block;font-size:12.5px;color:var(--gris)}
+.combo-tot b{font-size:19px;font-variant-numeric:tabular-nums}
+.combo-ac .btn-carro{height:44px;font-size:14.5px;flex:none}
+
 .tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
 .tarjeta{border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;background:#fff;
   display:flex;flex-direction:column;transition:.15s}
@@ -178,6 +197,14 @@ body.notas .marca-nota{display:grid}
 @media (max-width:1080px){
   .ficha{grid-template-columns:1fr;gap:30px}
   .galeria{position:static}
+}
+@media (max-width:900px){
+  .combo{grid-template-columns:96px minmax(0,1fr);gap:16px;padding:16px}
+  .combo-im{width:96px;height:96px}
+  .combo-ac{grid-column:1/-1;min-width:0;flex-direction:row;align-items:center;
+    justify-content:space-between;border-top:1px solid var(--linea);padding-top:14px}
+  .combo-tot{text-align:left}
+  .combo-ac .btn-carro{flex:0 0 auto;padding:0 22px}
 }
 @media (max-width:640px){
   .galeria{grid-template-columns:1fr}
@@ -302,11 +329,20 @@ body.enmarcado .btn-notas{display:none}
       </div>
     </div>
 
-    <!-- ======== relacionados ======== -->
+    <!-- ======== venta cruzada ========
+         Del catálogo real de Corlima: el único aditamento que vende para esta
+         batidora es el molino de metal. Los demás productos son de la misma
+         línea Empire Red, que sí están en stock. -->
     <div class="rel" data-nota="5">
-      <h2>Accesorios para esta batidora</h2>
-      <p class="fp-sub">Se conectan al centro de aditamentos de tu KitchenAid.</p>
-      <div class="tarjetas" id="accesorios"></div>
+      <h2>Súmale el aditamento</h2>
+      <p class="fp-sub">Se conecta al centro de aditamentos de esta misma batidora.</p>
+      <div class="combo" id="combo"></div>
+    </div>
+
+    <div class="rel" style="border-top:1px solid var(--linea)">
+      <h2>Completa tu línea Empire Red</h2>
+      <p class="fp-sub">Mismo color y acabado, para que la encimera combine.</p>
+      <div class="tarjetas" id="linea"></div>
     </div>
 
     <div class="rel" style="border-top:1px solid var(--linea)">
@@ -413,26 +449,47 @@ body.enmarcado .btn-notas{display:none}
       '<span class="pr"><b>'+Tienda.money(p.precio)+'</b>'+
       (p.antes ? '<s>'+Tienda.money(p.antes)+'</s>' : '')+'</span></div></a>';
   }
-  document.getElementById('accesorios').innerHTML = [
-    { marca:'KitchenAid', nombre:'Molino de metal para granos', precio:399, antes:1599,
-      img:BASE+'2634-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Tazón adicional de acero inoxidable 4,7 L', precio:299,
-      img:BASE+'2635-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Escudo vertedor de repuesto', precio:149,
-      img:BASE+'2636-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Gancho amasador recubierto', precio:189,
-      img:BASE+'2637-home_default/batidora-tazon-elevable-66l-empire-red.jpg' }
+  // el catálogo de Corlima trae un solo aditamento para esta batidora, y con un
+  // descuento muy fuerte: da para ofrecerlo en pareja en vez de en una fila de tarjetas
+  var ADITAMENTO = { nombre:'Aditamento molino de alimento de metal', precio:169, antes:679,
+    img:BASE+'2616-home_default/aditamento-molino-de-alimento-de-metal.jpg' };
+
+  document.getElementById('combo').innerHTML =
+    '<div class="combo-im"><img src="'+ADITAMENTO.img+'" alt="" loading="lazy"></div>'+
+    '<div class="combo-tx">'+
+      '<span class="mk">KitchenAid</span>'+
+      '<h3>'+ADITAMENTO.nombre+'</h3>'+
+      '<p>Muele granos, legumbres y especias con el motor de tu batidora. Se acopla al '+
+      'mismo centro de conexión, sin herramientas.</p>'+
+      '<div class="combo-pr"><b>'+Tienda.money(ADITAMENTO.precio)+'</b>'+
+      '<s>'+Tienda.money(ADITAMENTO.antes)+'</s>'+
+      '<span class="off">-75%</span></div>'+
+    '</div>'+
+    '<div class="combo-ac">'+
+      '<div class="combo-tot"><span>Los dos juntos</span><b>'+Tienda.money(1799+ADITAMENTO.precio)+'</b></div>'+
+      '<button class="btn-carro" type="button" id="agregarCombo">Agregar los dos</button>'+
+    '</div>';
+
+  document.getElementById('linea').innerHTML = [
+    { marca:'KitchenAid', nombre:'Hervidor eléctrico de 1.7 L Empire Red', precio:549, antes:699,
+      img:BASE+'2582-home_default/hervidor-electrico-de-17-l-empire-red.jpg' },
+    { marca:'KitchenAid', nombre:'Cafetera de goteo 1.7 L Empire Red', precio:399, antes:499,
+      img:BASE+'2568-home_default/cafetera-de-goteo-17l-empire-red.jpg' },
+    { marca:'KitchenAid', nombre:'Tostadora 2 rebanadas Empire Red', precio:309, antes:429,
+      img:BASE+'2572-home_default/tostadora-2-rebanadas-empire-red.jpg' },
+    { marca:'KitchenAid', nombre:'Picatodo 3.5 tazas Empire Red', precio:199, antes:259,
+      img:BASE+'2957-home_default/picatodo-35-tazas-empire-red.jpg' }
   ].map(tarjeta).join('');
 
   document.getElementById('similares').innerHTML = [
+    { marca:'KitchenAid', nombre:'Batidora Artisan 4.7 L Empire Red', precio:1299, antes:2099,
+      img:BASE+'2653-home_default/batidora-artisan-47l-empire-red.jpg' },
     { marca:'KitchenAid', nombre:'Batidora tazón elevable 5.6 L Empire Red', precio:1999, antes:2799,
-      img:BASE+'2638-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Batidora tazón elevable 6.6 L Plateado', precio:1899, antes:3199,
-      img:BASE+'2639-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Batidora tazón elevable 5.6 L Negro Mate', precio:1999, antes:2799,
-      img:BASE+'2634-home_default/batidora-tazon-elevable-66l-empire-red.jpg' },
-    { marca:'KitchenAid', nombre:'Cafetera de goteo 1.7 L Empire Red', precio:749, antes:999,
-      img:BASE+'2635-home_default/batidora-tazon-elevable-66l-empire-red.jpg' }
+      img:BASE+'3043-home_default/batidora-tazon-elevable-56l-empire-red.jpg' },
+    { marca:'KitchenAid', nombre:'Batidora tazón elevable 6.6 L Plateado', precio:1999, antes:3199,
+      img:BASE+'3038-home_default/batidora-tazon-elevable-66l-plateado.jpg' },
+    { marca:'KitchenAid', nombre:'Batidora Artisan 4.7 L Cast Iron Black', precio:1199, antes:2099,
+      img:BASE+'2947-home_default/batidora-artisan-47l-cast-iron-black.jpg' }
   ].map(tarjeta).join('');
 
   /* ---------- cantidad y carro ---------- */
@@ -460,6 +517,15 @@ body.enmarcado .btn-notas{display:none}
     Tienda.irA('carrito.html');
   }
   document.getElementById('agregar').onclick = alCarro;
+
+  document.getElementById('agregarCombo').onclick = function(){
+    var est = Tienda.estado;
+    if(!est.items.some(function(i){ return i.id === 98; }))
+      est.items.push({ id:98, nombre:ADITAMENTO.nombre,
+        img: BASE+'2616-cart_default/aditamento-molino-de-alimento-de-metal.jpg',
+        precio:ADITAMENTO.precio, original:ADITAMENTO.antes, qty:1 });
+    alCarro();
+  };
   document.getElementById('agregarMovil').onclick = alCarro;
 
   /* ---------- pestañas ---------- */
@@ -486,8 +552,8 @@ body.enmarcado .btn-notas{display:none}
       d:'La ficha actual solo trae el resumen: no hay especificaciones, ni qué incluye la caja, ni garantía. Quien compara entre dos batidoras necesita esos datos y hoy no los encuentra.',
       dato:'Bloque nuevo', conf:'' },
     { t:'Recomendados con lógica',
-      d:'Hoy junto a esta batidora de S/1.799 aparecen un táper de S/15,99 y una máquina de hielo de S/8.299. Aquí se separan en accesorios de este mismo equipo y batidoras equivalentes: sirve para vender más, no para distraer.',
-      dato:'Reordenado', conf:'Precios de accesorios: de ejemplo' },
+      d:'Hoy junto a esta batidora de S/1.799 aparecen un táper de S/15,99 y una máquina de hielo de S/8.299. Aquí van tres bloques con productos que Corlima sí vende, sacados del feed del catálogo: el único aditamento que existe para esta batidora (el molino, con 75% de descuento, ofrecido en pareja), el resto de la línea Empire Red para que la encimera combine, y otras batidoras por si busca otra capacidad. Es venta cruzada real y sube el ticket, que es justo lo que pide el plan.',
+      dato:'Reordenado · productos y precios del feed', conf:'' },
     { t:'Sin popup tapando el botón',
       d:'El popup del 10% se superpone a la zona de "Agregar al carro" y aparece justo cuando la persona está por decidir. En esta propuesta no sale en fichas de producto; el cupón se ofrece en la portada o al salir.',
       dato:'Quitado de la ficha', conf:'' },
