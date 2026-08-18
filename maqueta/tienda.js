@@ -30,7 +30,9 @@
     wsp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 0 1 12 3.8m-3.3 4c-.2 0-.5.1-.7.4s-.9.9-.9 2.2.9 2.6 1 2.8c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7s1.6-.6 1.8-1.3c.2-.6.2-1.2.2-1.3l-.6-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1s-1.1-.4-2-1.3c-.7-.6-1.2-1.4-1.3-1.7s0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg>',
     fb:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-2.8h-2.7V9.4c0-.8.2-1.4 1.4-1.4h1.4V5.5c-.3 0-1.2-.1-2.2-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.2V14h2.3v7z"/></svg>',
     ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="16.9" cy="7.1" r="1" fill="currentColor" stroke="none"/></svg>',
-    barras:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
+    barras:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+    monitor:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4.5" width="18" height="12" rx="1.8"/><path d="M9 20h6M12 16.5V20"/></svg>',
+    celular:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2.5" width="10" height="19" rx="2.4"/><path d="M10.8 18.6h2.4"/></svg>'
   };
 
   var LOGO = 'https://www.corlima.pe/themes/childtheme/assets/img/logo-header-desk.svg';
@@ -103,6 +105,24 @@
     document.body.insertBefore(menu, document.body.firstChild);
     document.body.insertBefore(cab, document.body.firstChild);
     document.body.insertBefore(top, document.body.firstChild);
+
+    // barra del prototipo: siempre arriba del todo, con el cambio de vista.
+    // Dentro del visor móvil no se pinta: alli manda la barra de movil.html.
+    if(window.self === window.top){
+      var pag = (location.pathname.split('/').pop() || 'ficha.html');
+      var proto = document.createElement('div');
+      proto.className='proto';
+      proto.innerHTML='<div class="caja">'+
+        '<span class="et">Prototipo</span>'+
+        '<div class="vistas" role="group" aria-label="Cambiar de vista">'+
+          '<button type="button" class="on" aria-pressed="true">'+SVG.monitor+' Escritorio</button>'+
+          '<a href="movil.html?p='+pag+'">'+SVG.celular+' Celular</a>'+
+        '</div>'+
+        '<a class="volver" href="../index.html">Volver al índice</a></div>';
+      document.body.insertBefore(proto, document.body.firstChild);
+    } else {
+      document.body.classList.add('enmarcado');
+    }
 
     var pie = document.createElement('footer');
     pie.className='pie';

@@ -50,16 +50,14 @@
 .ahorras{font-size:13.5px;color:var(--verde);font-weight:500;margin-top:7px}
 
 /* --- stock --- */
-.stock{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:14px;font-weight:500}
+.stock{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;font-weight:500}
 .stock .punto{width:9px;height:9px;border-radius:50%;background:var(--verde);flex:none}
 .stock.pocas{color:#B45309}
 .stock.pocas .punto{background:#D97706}
-.barra-stock{height:4px;background:var(--linea);border-radius:3px;margin-top:9px;overflow:hidden;max-width:220px}
-.barra-stock i{display:block;height:100%;background:#D97706;border-radius:3px}
 
 /* --- entrega --- */
-.entrega-bloque{border:1px solid var(--linea);border-radius:var(--radio);margin-top:20px;overflow:hidden}
-.eb-fila{display:flex;gap:12px;padding:13px 15px;align-items:flex-start;border-bottom:1px solid var(--linea)}
+.entrega-bloque{border:1px solid var(--linea);border-radius:var(--radio);margin-top:24px;overflow:hidden;background:#FAFBFD}
+.eb-fila{display:flex;gap:12px;padding:14px 16px;align-items:flex-start;border-bottom:1px solid var(--linea)}
 .eb-fila:last-child{border-bottom:0}
 .eb-fila svg{width:20px;height:20px;color:var(--azul);flex:none;margin-top:2px}
 .eb-txt{flex:1;min-width:0}
@@ -71,7 +69,7 @@
 .eb-cp:hover{color:var(--azul)}
 
 /* --- accion --- */
-.accion{display:flex;gap:12px;margin-top:22px;align-items:stretch}
+.accion{display:flex;gap:12px;margin-top:24px;align-items:stretch}
 .cantidad{display:flex;align-items:center;border:1px solid var(--linea);border-radius:var(--radio);
   flex:none;height:50px}
 .cantidad button{width:40px;height:100%;background:none;border:0;cursor:pointer;color:var(--azul);
@@ -82,13 +80,10 @@
 .btn-carro{flex:1;height:50px;background:var(--azul);color:#fff;border:0;border-radius:var(--radio);
   font-size:15.5px;font-weight:500;cursor:pointer;transition:background .15s}
 .btn-carro:hover{background:var(--azul-hover)}
-.btn-comprar{width:100%;height:48px;margin-top:10px;background:#fff;color:var(--azul);
-  border:1.5px solid var(--azul);border-radius:var(--radio);font-size:15px;font-weight:500;cursor:pointer}
-.btn-comprar:hover{background:#F2F5FD}
 
 /* --- confianza --- */
-.confianza{border-top:1px solid var(--linea);margin-top:24px;padding-top:18px;
-  display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.confianza{border-top:1px solid var(--linea);margin-top:26px;padding-top:20px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
 .cf{display:flex;gap:10px;align-items:flex-start}
 .cf svg{width:18px;height:18px;color:var(--azul);flex:none;margin-top:2px}
 .cf b{display:block;font-size:13.5px;font-weight:500}
@@ -145,20 +140,11 @@
 .barra-movil .bm-p span{display:block;font-size:11.5px;color:var(--verde);font-weight:500}
 .barra-movil .btn-carro{height:46px}
 
-/* --- aviso de prototipo + notas --- */
-.tira{background:var(--azul);color:#fff;font-size:13px;padding:9px 16px;text-align:center}
-.tira b{color:#FFD23F;letter-spacing:.06em}
-.tira a{color:#fff;text-decoration:underline;text-underline-offset:2px}
-.flotantes{position:fixed;left:18px;bottom:18px;z-index:70;display:flex;gap:9px;align-items:center}
-.btn-notas{background:var(--tinta);color:#fff;
+/* --- notas de UX --- */
+.btn-notas{position:fixed;left:18px;bottom:18px;z-index:70;background:var(--tinta);color:#fff;
   border:0;border-radius:30px;padding:11px 18px;font-size:13.5px;font-weight:500;cursor:pointer;
   box-shadow:0 5px 20px rgba(17,17,17,.28)}
 .btn-notas:hover{background:#000}
-.btn-movil{background:#fff;color:var(--tinta);border:1px solid var(--linea);border-radius:30px;
-  padding:10px 16px;font-size:13.5px;font-weight:500;cursor:pointer;display:inline-flex;
-  align-items:center;gap:7px;box-shadow:0 5px 20px rgba(17,17,17,.16);text-decoration:none}
-.btn-movil:hover{border-color:var(--gris-suave)}
-.btn-movil svg{width:15px;height:15px;color:var(--azul)}
 body.notas .marca-nota{display:grid}
 .marca-nota{display:none;position:absolute;z-index:50;width:23px;height:23px;border-radius:50%;
   background:#D42B2B;color:#fff;font-size:12.5px;font-weight:700;place-items:center;
@@ -202,8 +188,7 @@ body.notas .marca-nota{display:grid}
   .confianza{grid-template-columns:1fr}
   .barra-movil{display:flex}
   body{padding-bottom:78px}
-  .flotantes{bottom:86px;left:12px}
-  .btn-notas,.btn-movil{padding:8px 13px;font-size:12.5px}
+  .btn-notas{bottom:86px;left:12px;padding:8px 13px;font-size:12.5px}
   /* en el sitio real los dos botones de WhatsApp se paran encima del título
      del producto: aquí se juntan en uno y se corren sobre la barra de compra */
   .wa{bottom:90px;right:12px;flex-direction:row;gap:8px}
@@ -212,12 +197,11 @@ body.notas .marca-nota{display:grid}
   .wa .a{display:none}
 }
 /* dentro del visor móvil los botones del prototipo estorban */
-body.enmarcado .flotantes{display:none}
+body.enmarcado .btn-notas{display:none}
 </style>
 </head>
 <body>
 
-<div class="tira"><b>PROTOTIPO</b> &middot; Ficha de producto propuesta &middot; no es el sitio real &middot; <a href="../index.html">volver al índice</a></div>
 
 <main class="cuerpo">
   <div class="caja">
@@ -256,9 +240,6 @@ body.enmarcado .flotantes{display:none}
           <i class="punto"></i>
           <span>Quedan 4 unidades</span>
         </div>
-        <div class="barra-stock"><i style="width:22%"></i></div>
-
-        <div class="entrega-bloque" data-nota="2" id="entregaBloque"></div>
 
         <div class="accion">
           <div class="cantidad">
@@ -268,7 +249,8 @@ body.enmarcado .flotantes{display:none}
           </div>
           <button class="btn-carro" type="button" id="agregar">Agregar al carro</button>
         </div>
-        <button class="btn-comprar" type="button" id="comprarYa">Comprar ahora</button>
+
+        <div class="entrega-bloque" data-nota="2" id="entregaBloque"></div>
 
         <div class="confianza" data-nota="3" id="confianza"></div>
       </div>
@@ -346,10 +328,7 @@ body.enmarcado .flotantes{display:none}
 </div>
 
 <!-- notas de UX -->
-<div class="flotantes">
-  <button class="btn-notas" type="button" id="btnNotas">Ver los 7 cambios</button>
-  <a class="btn-movil" href="movil.html?p=ficha.html" id="btnMovil">Ver en móvil</a>
-</div>
+<button class="btn-notas" type="button" id="btnNotas">Ver los 7 cambios</button>
 
 <aside class="leyenda" id="leyenda" aria-hidden="true">
   <div class="ly-top">
@@ -396,17 +375,18 @@ body.enmarcado .flotantes{display:none}
     var b = e.target.closest('button'); if(b) grande.src = FOTOS[+b.getAttribute('data-i')].gran;
   });
 
-  /* ---------- entrega ---------- */
+  /* ---------- entrega ----------
+     El costo real depende de la dirección y hoy solo se calcula en el checkout,
+     así que aquí no se promete una cifra: se dice el plazo y se enlaza la lista
+     de cobertura que ya existe en el pie del sitio. */
   document.getElementById('entregaBloque').innerHTML =
     '<div class="eb-fila">'+ S.camion +
       '<div class="eb-txt"><b>Despacho a domicilio</b>'+
-      '<span>Llega el <b>miércoles 19 de agosto</b> a Lima Metropolitana</span>'+
-      '<span>Costo del envío: <b>S/ 00,00</b> para tu zona</span>'+
-      '<button class="eb-cp" type="button">Calcular para otro distrito o provincia</button></div></div>'+
+      '<span>Entrega en 24 a 48 horas en Lima · Costo según tu distrito</span>'+
+      '<button class="eb-cp" type="button">Ver cobertura y tarifas</button></div></div>'+
     '<div class="eb-fila">'+ S.tienda +
       '<div class="eb-txt"><b>Recojo en tienda</b>'+
-      '<span>Disponible <b>hoy desde las 4:00 p. m.</b> · Sin costo</span>'+
-      '<button class="eb-cp" type="button">Ver tiendas con stock</button></div></div>';
+      '<span>Sin costo, desde 2 horas después de confirmado el pago</span></div></div>';
 
   /* ---------- confianza ---------- */
   document.getElementById('confianza').innerHTML =
@@ -481,7 +461,6 @@ body.enmarcado .flotantes{display:none}
   }
   document.getElementById('agregar').onclick = alCarro;
   document.getElementById('agregarMovil').onclick = alCarro;
-  document.getElementById('comprarYa').onclick = alCarro;
 
   /* ---------- pestañas ---------- */
   document.querySelector('.fp-tabs').addEventListener('click', function(e){
@@ -497,9 +476,9 @@ body.enmarcado .flotantes{display:none}
     { t:'Stock a la vista',
       d:'La ficha real no dice cuántas unidades quedan. El "Disponible" que se ve hoy es del método de entrega, no del producto. Mostrar existencias reales da urgencia honesta y evita la sorpresa en el carrito.',
       dato:'Bloque nuevo', conf:'Cantidad de ejemplo' },
-    { t:'Entrega con fecha y costo',
-      d:'Hoy el "Entrega hasta en 48 horas" vive en un carrusel rotativo de la barra superior y el costo del envío no aparece hasta el paso 3 del checkout. Decidir a ciegas es la causa clásica de abandono. Corlima no ofrece envío gratis, así que aquí se muestra el costo tal cual, por zona: lo importante es que la persona lo sepa antes y no al final.',
-      dato:'Reubicado y ampliado', conf:'Tarifas y plazos por zona: los define comercial' },
+    { t:'Plazo de entrega junto al precio',
+      d:'Hoy el "Entrega en 48 horas" vive en un carrusel rotativo de la barra superior, lejos del precio, y rota cada cinco segundos: se pierde. Aquí queda fijo donde se decide. El costo no se muestra a propósito, porque hoy solo se puede calcular con la dirección puesta en el checkout: en su lugar se avisa que depende del distrito y se enlaza la lista de cobertura que ya existe en el pie del sitio, para que no sea una sorpresa en el último paso.',
+      dato:'Reubicado', conf:'Lo ideal sería calcular el costo por distrito aquí mismo: pide tabla de tarifas y desarrollo' },
     { t:'Señales de confianza junto al botón',
       d:'"Distribuidor autorizado de KitchenAid" está en el banner de la portada pero no donde se decide. Junto al botón van también garantía, devoluciones y los medios de pago reales.',
       dato:'Bloque nuevo', conf:'Confirmar medios de pago activos' },
@@ -544,13 +523,6 @@ body.enmarcado .flotantes{display:none}
     if(getComputedStyle(el).position === 'static') el.style.position = 'relative';
     el.appendChild(m);
   });
-
-  // si la ficha se abre dentro del visor móvil, se ocultan los botones del prototipo
-  if(window.self !== window.top) document.body.classList.add('enmarcado');
-
-  document.getElementById('btnMovil').insertAdjacentHTML('afterbegin',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+
-    '<rect x="7" y="2.5" width="10" height="19" rx="2.4"/><path d="M10.8 18.6h2.4"/></svg>');
 
   var ly = document.getElementById('leyenda'), btn = document.getElementById('btnNotas');
   document.getElementById('cerrarNotas').innerHTML = S.equis;
