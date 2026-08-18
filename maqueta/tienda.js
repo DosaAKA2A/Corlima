@@ -165,7 +165,7 @@
       '<div class="fila ahorro"><span>Descuentos</span><b>- '+money(t.descuento)+'</b></div>';
     if(estado.cupon)
       filas += '<div class="fila ahorro"><span>Cupón '+estado.cupon.codigo+'</span><b>- '+money(t.cupon)+'</b></div>';
-    filas += '<div class="fila'+(t.envio?'':' envio')+'"><span>Envío</span><b>'+(t.envio?money(t.envio):'Gratis')+'</b></div>';
+    filas += '<div class="fila"><span>Envío</span><b>'+(t.envio?money(t.envio):'Por calcular')+'</b></div>';
 
     caja.innerHTML =
       '<h2>Resumen de la orden</h2>'+ filas +

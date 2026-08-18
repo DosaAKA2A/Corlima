@@ -88,7 +88,7 @@
     ['Descuentos', '- ' + Tienda.money(t.descuento)]
   ];
   if(est.cupon) lineas.push(['Cupón ' + est.cupon.codigo, '- ' + Tienda.money(t.cupon)]);
-  lineas.push(['Envío', t.envio ? Tienda.money(t.envio) : 'Gratis']);
+  lineas.push(['Envío', t.envio ? Tienda.money(t.envio) : 'Sin costo (retiro en tienda)']);
 
   document.getElementById('datos').innerHTML =
     lineas.map(function(l){ return '<div class="f"><span>' + l[0] + '</span><b>' + l[1] + '</b></div>'; }).join('') +

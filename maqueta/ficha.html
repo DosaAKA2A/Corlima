@@ -42,11 +42,6 @@
 .compra h1{font-size:25px;line-height:1.25;font-weight:500;margin:7px 0 0}
 .sku{font-size:12.5px;color:var(--gris-suave);margin-top:5px}
 
-.estrellas{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:13.5px;color:var(--gris)}
-.estrellas .est{display:flex;gap:1.5px;color:#F5A623}
-.estrellas svg{width:15px;height:15px}
-.estrellas a{color:var(--celeste);text-decoration:underline;text-underline-offset:2px}
-.estrellas a:hover{color:var(--azul)}
 
 .precio{margin-top:18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .precio .antes{font-size:15px;color:var(--gris-suave);text-decoration:line-through}
@@ -71,7 +66,6 @@
 .eb-txt > b{display:block;font-size:14px;font-weight:500}
 .eb-txt > span{display:block;font-size:13px;color:var(--gris);margin-top:2px}
 .eb-txt span b{font-weight:500;color:var(--tinta)}
-.eb-txt .gratis{color:var(--verde);font-weight:500}
 .eb-cp{background:none;border:0;padding:0;margin-top:4px;font-size:13px;color:var(--celeste);
   text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .eb-cp:hover{color:var(--azul)}
@@ -154,10 +148,16 @@
 .tira{background:var(--azul);color:#fff;font-size:13px;padding:9px 16px;text-align:center}
 .tira b{color:#FFD23F;letter-spacing:.06em}
 .tira a{color:#fff;text-decoration:underline;text-underline-offset:2px}
-.btn-notas{position:fixed;left:18px;bottom:18px;z-index:70;background:var(--tinta);color:#fff;
+.flotantes{position:fixed;left:18px;bottom:18px;z-index:70;display:flex;gap:9px;align-items:center}
+.btn-notas{background:var(--tinta);color:#fff;
   border:0;border-radius:30px;padding:11px 18px;font-size:13.5px;font-weight:500;cursor:pointer;
   box-shadow:0 5px 20px rgba(17,17,17,.28)}
 .btn-notas:hover{background:#000}
+.btn-movil{background:#fff;color:var(--tinta);border:1px solid var(--linea);border-radius:30px;
+  padding:10px 16px;font-size:13.5px;font-weight:500;cursor:pointer;display:inline-flex;
+  align-items:center;gap:7px;box-shadow:0 5px 20px rgba(17,17,17,.16);text-decoration:none}
+.btn-movil:hover{border-color:var(--gris-suave)}
+.btn-movil svg{width:15px;height:15px;color:var(--azul)}
 body.notas .marca-nota{display:grid}
 .marca-nota{display:none;position:absolute;z-index:50;width:23px;height:23px;border-radius:50%;
   background:#D42B2B;color:#fff;font-size:12.5px;font-weight:700;place-items:center;
@@ -175,14 +175,18 @@ body.notas .marca-nota{display:grid}
 .ly-lista{overflow-y:auto;padding:6px 20px 26px;flex:1}
 .ly-item{display:grid;grid-template-columns:24px 1fr;gap:11px;padding:15px 0;border-bottom:1px solid var(--linea)}
 .ly-item:last-child{border-bottom:0}
-.ly-n{width:23px;height:23px;border-radius:50%;background:#D42B2B;color:#fff;font-size:12.5px;
-  font-weight:700;display:grid;place-items:center;margin-top:1px}
+.ly-n{width:23px;height:23px;flex:none;align-self:start;box-sizing:border-box;border-radius:50%;
+  background:#D42B2B;color:#fff;font-size:12.5px;font-weight:700;display:grid;place-items:center;margin-top:1px}
 .ly-item b{display:block;font-size:14px;font-weight:500;margin-bottom:3px}
 .ly-item p{margin:0;font-size:13px;color:var(--gris);line-height:1.55}
 .ly-item .dato{display:inline-block;margin-top:6px;font-size:11.5px;background:#F2F5FD;color:var(--azul);
   border-radius:4px;padding:3px 7px;font-weight:500}
 .ly-item .porconf{display:inline-block;margin-top:6px;font-size:11.5px;background:#FFF7E6;color:#8A6410;
   border-radius:4px;padding:3px 7px;font-weight:500}
+.ly-aparte{margin-top:18px;border-top:2px solid var(--linea);padding-top:6px}
+.ly-aparte h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--gris-suave);
+  font-weight:600;margin:12px 0 0}
+.ly-n.vacio{background:none;border:1.5px dashed var(--gris-suave);color:var(--gris-suave);font-size:15px}
 
 @media (max-width:1080px){
   .ficha{grid-template-columns:1fr;gap:30px}
@@ -197,8 +201,17 @@ body.notas .marca-nota{display:grid}
   .confianza{grid-template-columns:1fr}
   .barra-movil{display:flex}
   body{padding-bottom:78px}
-  .btn-notas{bottom:82px}
+  .flotantes{bottom:86px;left:12px}
+  .btn-notas,.btn-movil{padding:8px 13px;font-size:12.5px}
+  /* en el sitio real los dos botones de WhatsApp se paran encima del título
+     del producto: aquí se juntan en uno y se corren sobre la barra de compra */
+  .wa{bottom:90px;right:12px;flex-direction:row;gap:8px}
+  .wa a{width:38px;height:38px}
+  .wa svg{width:20px;height:20px}
+  .wa .a{display:none}
 }
+/* dentro del visor móvil los botones del prototipo estorban */
+body.enmarcado .flotantes{display:none}
 </style>
 </head>
 <body>
@@ -231,12 +244,6 @@ body.notas .marca-nota{display:grid}
         <h1>Batidora con tazón elevable 6.6 L — Empire Red</h1>
         <p class="sku">Código 11481</p>
 
-        <div class="estrellas" data-nota="1">
-          <span class="est" id="est" aria-hidden="true"></span>
-          <span><b>4,8</b> de 5</span>
-          <a href="#opiniones">23 opiniones</a>
-        </div>
-
         <div class="precio">
           <span class="antes">S/ 3.199,00</span>
           <span class="ahora">S/ 1.799,00</span>
@@ -244,13 +251,13 @@ body.notas .marca-nota{display:grid}
         </div>
         <p class="ahorras">Ahorras S/ 1.400,00</p>
 
-        <div class="stock pocas" data-nota="2">
+        <div class="stock pocas" data-nota="1">
           <i class="punto"></i>
           <span>Quedan 4 unidades</span>
         </div>
         <div class="barra-stock"><i style="width:22%"></i></div>
 
-        <div class="entrega-bloque" data-nota="3" id="entregaBloque"></div>
+        <div class="entrega-bloque" data-nota="2" id="entregaBloque"></div>
 
         <div class="accion">
           <div class="cantidad">
@@ -262,12 +269,12 @@ body.notas .marca-nota{display:grid}
         </div>
         <button class="btn-comprar" type="button" id="comprarYa">Comprar ahora</button>
 
-        <div class="confianza" data-nota="4" id="confianza"></div>
+        <div class="confianza" data-nota="3" id="confianza"></div>
       </div>
     </div>
 
     <!-- ======== detalle ======== -->
-    <div class="detalle" data-nota="5">
+    <div class="detalle" data-nota="4">
       <div class="tabs" role="tablist">
         <button role="tab" aria-selected="true"  data-panel="p-desc">Descripción</button>
         <button role="tab" aria-selected="false" data-panel="p-esp">Especificaciones</button>
@@ -313,7 +320,7 @@ body.notas .marca-nota{display:grid}
     </div>
 
     <!-- ======== relacionados ======== -->
-    <div class="rel" data-nota="6">
+    <div class="rel" data-nota="5">
       <h2>Accesorios para esta batidora</h2>
       <p class="sub">Se conectan al centro de aditamentos de tu KitchenAid.</p>
       <div class="tarjetas" id="accesorios"></div>
@@ -329,7 +336,7 @@ body.notas .marca-nota{display:grid}
 </main>
 
 <!-- barra fija en movil -->
-<div class="barra-movil">
+<div class="barra-movil" data-nota="7">
   <div class="bm-p">
     <b>S/ 1.799</b>
     <span>Ahorras S/ 1.400</span>
@@ -338,7 +345,10 @@ body.notas .marca-nota{display:grid}
 </div>
 
 <!-- notas de UX -->
-<button class="btn-notas" type="button" id="btnNotas">Ver los 7 cambios</button>
+<div class="flotantes">
+  <button class="btn-notas" type="button" id="btnNotas">Ver los 7 cambios</button>
+  <a class="btn-movil" href="movil.html?p=ficha.html" id="btnMovil">Ver en móvil</a>
+</div>
 
 <aside class="leyenda" id="leyenda" aria-hidden="true">
   <div class="ly-top">
@@ -358,7 +368,6 @@ body.notas .marca-nota{display:grid}
 
   /* ---------- iconos extra ---------- */
   var ICO = {
-    estrella:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4 6.2 20.5l1.1-6.5L2.6 9.4l6.5-.9z"/></svg>',
     escudo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7.5 3v6c0 4.4-3.1 7.9-7.5 9-4.4-1.1-7.5-4.6-7.5-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>',
     vuelta:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 7.5V12h4.5"/></svg>',
     sello:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="9.5" r="5.5"/><path d="M9 14.5L8 21l4-2 4 2-1-6.5"/></svg>',
@@ -386,14 +395,12 @@ body.notas .marca-nota{display:grid}
     var b = e.target.closest('button'); if(b) grande.src = FOTOS[+b.getAttribute('data-i')].gran;
   });
 
-  document.getElementById('est').innerHTML = ICO.estrella.repeat(5);
-
   /* ---------- entrega ---------- */
   document.getElementById('entregaBloque').innerHTML =
     '<div class="eb-fila">'+ S.camion +
       '<div class="eb-txt"><b>Despacho a domicilio</b>'+
       '<span>Llega el <b>miércoles 19 de agosto</b> a Lima Metropolitana</span>'+
-      '<span class="gratis">Envío gratis en compras desde S/ 000</span>'+
+      '<span>Costo del envío: <b>S/ 00,00</b> para tu zona</span>'+
       '<button class="eb-cp" type="button">Calcular para otro distrito o provincia</button></div></div>'+
     '<div class="eb-fila">'+ S.tienda +
       '<div class="eb-txt"><b>Recojo en tienda</b>'+
@@ -486,15 +493,12 @@ body.notas .marca-nota{display:grid}
 
   /* ---------- notas de UX ---------- */
   var NOTAS = [
-    { t:'Opiniones de compradores',
-      d:'Hoy la ficha no tiene ni una valoración. En un equipo de S/1.799 la prueba social es lo que cierra la duda; sin ella, la persona se va a buscar reseñas fuera y no vuelve.',
-      dato:'Bloque nuevo', conf:'Requiere módulo de reseñas' },
     { t:'Stock a la vista',
       d:'La ficha real no dice cuántas unidades quedan. El "Disponible" que se ve hoy es del método de entrega, no del producto. Mostrar existencias reales da urgencia honesta y evita la sorpresa en el carrito.',
       dato:'Bloque nuevo', conf:'Cantidad de ejemplo' },
     { t:'Entrega con fecha y costo',
-      d:'Hoy el "Entrega hasta en 48 horas" vive en un carrusel rotativo de la barra superior y el costo del envío no aparece hasta el paso 3 del checkout. Decidir a ciegas es la causa clásica de abandono.',
-      dato:'Reubicado y ampliado', conf:'Umbral de envío gratis y fechas: los define comercial' },
+      d:'Hoy el "Entrega hasta en 48 horas" vive en un carrusel rotativo de la barra superior y el costo del envío no aparece hasta el paso 3 del checkout. Decidir a ciegas es la causa clásica de abandono. Corlima no ofrece envío gratis, así que aquí se muestra el costo tal cual, por zona: lo importante es que la persona lo sepa antes y no al final.',
+      dato:'Reubicado y ampliado', conf:'Tarifas y plazos por zona: los define comercial' },
     { t:'Señales de confianza junto al botón',
       d:'"Distribuidor autorizado de KitchenAid" está en el banner de la portada pero no donde se decide. Junto al botón van también garantía, devoluciones y los medios de pago reales.',
       dato:'Bloque nuevo', conf:'Confirmar medios de pago activos' },
@@ -506,7 +510,16 @@ body.notas .marca-nota{display:grid}
       dato:'Reordenado', conf:'Precios de accesorios: de ejemplo' },
     { t:'Sin popup tapando el botón',
       d:'El popup del 10% se superpone a la zona de "Agregar al carro" y aparece justo cuando la persona está por decidir. En esta propuesta no sale en fichas de producto; el cupón se ofrece en la portada o al salir.',
-      dato:'Quitado de la ficha', conf:'' }
+      dato:'Quitado de la ficha', conf:'' },
+    { t:'Barra de compra fija en el celular',
+      d:'El 78% del tráfico es móvil y convierte a un tercio que el escritorio. En el celular el precio y el botón quedan siempre a la vista, sin tener que volver a subir. De paso, los dos botones de WhatsApp —que en el sitio real se paran encima del título del producto— se reducen a uno y se corren sobre la barra.',
+      dato:'Solo en móvil', conf:'' }
+  ];
+
+  // lo que no está en la maqueta porque hoy la tienda no lo tiene
+  var PENDIENTES = [
+    { t:'Opiniones de compradores',
+      d:'No aparece en la maqueta porque la tienda no tiene reseñas y no íbamos a mostrar estrellas inventadas. Sigue siendo la carencia más grande de la ficha: en un equipo de S/1.799 la prueba social es lo que cierra la duda, y sin ella la persona se va a buscar reseñas fuera y no vuelve. Requiere instalar un módulo de reseñas en PrestaShop y pedirlas después de cada entrega.' }
   ];
 
   var lista = document.getElementById('lyLista');
@@ -514,7 +527,11 @@ body.notas .marca-nota{display:grid}
     return '<div class="ly-item"><span class="ly-n">'+(i+1)+'</span><div><b>'+n.t+'</b><p>'+n.d+'</p>'+
       (n.dato ? '<span class="dato">'+n.dato+'</span> ' : '')+
       (n.conf ? '<span class="porconf">'+n.conf+'</span>' : '')+'</div></div>';
-  }).join('');
+  }).join('') +
+  '<div class="ly-aparte"><h3>Queda pendiente</h3>' +
+  PENDIENTES.map(function(n){
+    return '<div class="ly-item"><span class="ly-n vacio">·</span><div><b>'+n.t+'</b><p>'+n.d+'</p></div></div>';
+  }).join('') + '</div>';
 
   // el 7 no marca un bloque (es algo que se quita), va anclado al panel de compra
   document.querySelectorAll('[data-nota]').forEach(function(el){
@@ -526,6 +543,13 @@ body.notas .marca-nota{display:grid}
     if(getComputedStyle(el).position === 'static') el.style.position = 'relative';
     el.appendChild(m);
   });
+
+  // si la ficha se abre dentro del visor móvil, se ocultan los botones del prototipo
+  if(window.self !== window.top) document.body.classList.add('enmarcado');
+
+  document.getElementById('btnMovil').insertAdjacentHTML('afterbegin',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+
+    '<rect x="7" y="2.5" width="10" height="19" rx="2.4"/><path d="M10.8 18.6h2.4"/></svg>');
 
   var ly = document.getElementById('leyenda'), btn = document.getElementById('btnNotas');
   document.getElementById('cerrarNotas').innerHTML = S.equis;

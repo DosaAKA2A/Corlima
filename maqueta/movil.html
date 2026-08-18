@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!-- Visor movil del prototipo: enmarca cualquier pantalla de la maqueta en un
+     teléfono real para verla sin achicar la ventana del navegador.
+     Uso: movil.html?p=ficha.html  (por defecto abre la ficha) -->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Vista móvil — Corlima</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --azul:#0D287A; --celeste:#1B7BC9; --tinta:#111; --gris:#5A6274;
+  --gris-suave:#8A91A3; --linea:#E4E7EE; --fondo:#EEF0F5; --amar:#FFD23F;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fondo);color:var(--tinta);
+  font:400 15px/1.5 Roboto,system-ui,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;
+  min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--celeste);outline-offset:2px;border-radius:4px}
+
+.tira{background:var(--azul);color:#fff;font-size:13px;padding:9px 16px;text-align:center;flex:none}
+.tira b{color:var(--amar);letter-spacing:.06em}
+.tira a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+
+.barra{flex:none;background:#fff;border-bottom:1px solid var(--linea);
+  display:flex;align-items:center;gap:22px;padding:12px 22px;flex-wrap:wrap}
+.barra h1{font-size:16px;font-weight:500;margin:0}
+.barra .sep{width:1px;height:24px;background:var(--linea)}
+.grupo{display:flex;align-items:center;gap:9px}
+.grupo > span{font-size:12.5px;color:var(--gris);white-space:nowrap}
+.opt{display:flex;border:1px solid var(--linea);border-radius:8px;overflow:hidden}
+.opt button{background:#fff;border:0;padding:7px 13px;font:inherit;font-size:13px;color:var(--gris);
+  cursor:pointer;border-right:1px solid var(--linea);white-space:nowrap}
+.opt button:last-child{border-right:0}
+.opt button:hover{background:#F5F7FB}
+.opt button[aria-pressed="true"]{background:var(--azul);color:#fff}
+.medida{font-size:12.5px;color:var(--gris-suave);font-variant-numeric:tabular-nums;
+  margin-left:auto;white-space:nowrap}
+
+.escena{flex:1;display:grid;place-items:center;padding:30px 20px 44px;overflow:auto}
+.fono{
+  background:#1B1D22;border-radius:44px;padding:11px;flex:none;
+  box-shadow:0 22px 60px rgba(17,20,30,.30), 0 3px 10px rgba(17,20,30,.18);
+  position:relative;transition:width .18s ease,height .18s ease;
+}
+.fono::after{ /* botones laterales */
+  content:"";position:absolute;right:-2px;top:120px;width:3px;height:58px;
+  background:#34373E;border-radius:0 3px 3px 0;
+}
+.pantalla{background:#fff;border-radius:34px;overflow:hidden;width:100%;height:100%;position:relative}
+iframe{width:100%;height:100%;border:0;display:block}
+
+.pie{flex:none;text-align:center;padding:0 20px 26px;color:var(--gris);font-size:13px}
+.pie a{color:var(--celeste)}
+
+@media (max-width:760px){
+  .barra{gap:14px;padding:12px 16px}
+  .medida{margin-left:0;width:100%}
+  .escena{padding:18px 10px 30px}
+}
+</style>
+</head>
+<body>
+
+<div class="tira"><b>PROTOTIPO</b> &middot; Vista móvil &middot; <a href="../index.html">volver al índice</a></div>
+
+<div class="barra">
+  <h1>Cómo se ve en el celular</h1>
+  <div class="sep" aria-hidden="true"></div>
+
+  <div class="grupo">
+    <span>Pantalla</span>
+    <div class="opt" id="pantallas" role="group" aria-label="Pantalla a mostrar">
+      <button type="button" data-p="ficha.html"   aria-pressed="true">Ficha</button>
+      <button type="button" data-p="carrito.html" aria-pressed="false">Carro</button>
+      <button type="button" data-p="entrega.html" aria-pressed="false">Entrega</button>
+      <button type="button" data-p="pago.html"    aria-pressed="false">Pago</button>
+    </div>
+  </div>
+
+  <div class="grupo">
+    <span>Equipo</span>
+    <div class="opt" id="equipos" role="group" aria-label="Tamaño del equipo">
+      <button type="button" data-w="360" data-h="780" aria-pressed="false">Android chico</button>
+      <button type="button" data-w="390" data-h="844" aria-pressed="true">iPhone 14</button>
+      <button type="button" data-w="412" data-h="915" aria-pressed="false">Android grande</button>
+    </div>
+  </div>
+
+  <span class="medida" id="medida">390 × 844</span>
+</div>
+
+<div class="escena">
+  <div class="fono" id="fono">
+    <div class="pantalla">
+      <iframe id="marco" src="ficha.html" title="Vista móvil de la maqueta"></iframe>
+    </div>
+  </div>
+</div>
+
+<p class="pie">
+  Es la misma página, no una captura: se puede desplazar, tocar y agregar al carro.
+  Para verla a pantalla completa, <a href="ficha.html" id="directo">ábrela directamente</a>.
+</p>
+
+<script>
+(function(){
+  var marco  = document.getElementById('marco'),
+      fono   = document.getElementById('fono'),
+      medida = document.getElementById('medida'),
+      directo= document.getElementById('directo');
+
+  function tamano(w, h){
+    // el alto se recorta si la ventana no da, para que el teléfono entre entero
+    var tope = Math.max(430, window.innerHeight - 230);
+    var alto = Math.min(h, tope);
+    fono.style.width  = (w + 22) + 'px';
+    fono.style.height = (alto + 22) + 'px';
+    medida.textContent = w + ' × ' + h + (alto < h ? ' (recortado a ' + alto + ')' : '');
+  }
+
+  function marcar(grupo, btn){
+    [].forEach.call(grupo.children, function(b){ b.setAttribute('aria-pressed', b === btn); });
+  }
+
+  var equipos = document.getElementById('equipos');
+  equipos.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    marcar(equipos, b);
+    tamano(+b.getAttribute('data-w'), +b.getAttribute('data-h'));
+  });
+
+  var pantallas = document.getElementById('pantallas');
+  pantallas.addEventListener('click', function(e){
+    var b = e.target.closest('button'); if(!b) return;
+    marcar(pantallas, b);
+    var p = b.getAttribute('data-p');
+    marco.src = p;
+    directo.href = p;
+  });
+
+  // ?p=carrito.html abre esa pantalla de entrada
+  var pedida = (location.search.match(/[?&]p=([\w.-]+)/) || [])[1];
+  if(pedida){
+    var btn = pantallas.querySelector('[data-p="' + pedida + '"]');
+    if(btn){ marcar(pantallas, btn); marco.src = pedida; directo.href = pedida; }
+  }
+
+  function actual(){
+    var b = equipos.querySelector('[aria-pressed="true"]');
+    tamano(+b.getAttribute('data-w'), +b.getAttribute('data-h'));
+  }
+  window.addEventListener('resize', actual);
+  actual();
+})();
+</script>
+</body>
+</html>

@@ -360,9 +360,10 @@
         '<span class="ico">'+S.reloj+'</span><span class="txt"><span class="t">Envío express hoy</span>'+
         '<span class="d">En las próximas 4 horas</span></span>'+
         '<span class="precio" style="color:var(--tinta)">'+Tienda.money(19.9)+'</span></label>'+
-        '<label class="opc" data-costo="0" data-eti="Envío gratis en 3 días"><input type="radio" name="env">'+
-        '<span class="ico">'+S.calendario+'</span><span class="txt"><span class="t">Envío gratis</span>'+
-        '<span class="d">Entre 2 y 3 días hábiles</span></span><span class="precio">Gratis</span></label>';
+        '<label class="opc" data-costo="12.9" data-eti="Envío estándar en 3 días"><input type="radio" name="env">'+
+        '<span class="ico">'+S.calendario+'</span><span class="txt"><span class="t">Envío estándar</span>'+
+        '<span class="d">Entre 2 y 3 días hábiles</span></span>'+
+        '<span class="precio" style="color:var(--tinta)">'+Tienda.money(12.9)+'</span></label>';
     }
     document.getElementById('opcsEnvio').innerHTML = html;
     abrir('pOpciones');
