@@ -71,6 +71,10 @@
 .eb-cp{background:none;border:0;padding:0;margin-top:4px;font-size:13px;color:var(--celeste);
   text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .eb-cp:hover{color:var(--azul)}
+.eb-tag{flex:none;align-self:center;font-size:12px;font-weight:500;white-space:nowrap;
+  border-radius:20px;padding:4px 11px;background:#EDEFF4;color:var(--gris)}
+.eb-tag.libre{background:#E4F3EA;color:var(--verde);font-weight:700;
+  box-shadow:inset 0 0 0 1px rgba(15,123,79,.22)}
 
 /* --- accion --- */
 .accion{display:flex;gap:12px;margin-top:24px;align-items:stretch}
@@ -423,27 +427,62 @@ body.enmarcado .btn-notas{display:none}
      así que aquí no se promete una cifra: se dice el plazo y se enlaza la lista
      de cobertura que ya existe en el pie del sitio. */
 
-  // El recojo se habilita 2 días después de la compra. Se calcula con la fecha
-  // del día para que la persona lea un día concreto y no tenga que hacer cuentas.
-  // Se saltan los domingos: si el recojo cae domingo, pasa al lunes.
+  // El recojo se habilita 2 DÍAS HÁBILES después de la compra: Corlima no
+  // atiende sábados, domingos ni feriados. Se muestra el día con nombre para
+  // que nadie tenga que hacer la cuenta.
   var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
   var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio',
                'agosto','septiembre','octubre','noviembre','diciembre'];
+
+  // Feriados nacionales del Perú. Hay que agregar los años siguientes a mano:
+  // los de Semana Santa se mueven cada año (en 2027 son el 25 y 26 de marzo).
+  var FERIADOS = [
+    '2026-01-01', // Año Nuevo
+    '2026-04-02', // Jueves Santo
+    '2026-04-03', // Viernes Santo
+    '2026-05-01', // Día del Trabajo
+    '2026-06-07', // Batalla de Arica y Día de la Bandera
+    '2026-06-29', // San Pedro y San Pablo
+    '2026-07-23', // Día de la Fuerza Aérea
+    '2026-07-28', // Fiestas Patrias
+    '2026-07-29', // Fiestas Patrias
+    '2026-08-06', // Batalla de Junín
+    '2026-08-30', // Santa Rosa de Lima
+    '2026-10-08', // Combate de Angamos
+    '2026-11-01', // Todos los Santos
+    '2026-12-08', // Inmaculada Concepción
+    '2026-12-09', // Batalla de Ayacucho
+    '2026-12-25'  // Navidad
+  ];
+
+  function iso(d){
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  function esHabil(d){
+    var s = d.getDay();
+    return s !== 0 && s !== 6 && FERIADOS.indexOf(iso(d)) === -1;
+  }
   function diaDeRecojo(){
-    var d = new Date();
-    d.setDate(d.getDate() + 2);
-    if(d.getDay() === 0) d.setDate(d.getDate() + 1);
+    var d = new Date(), habiles = 0;
+    while(habiles < 2){
+      d.setDate(d.getDate() + 1);
+      if(esHabil(d)) habiles++;
+    }
     return DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()];
   }
 
   document.getElementById('entregaBloque').innerHTML =
     '<div class="eb-fila">'+ S.camion +
       '<div class="eb-txt"><b>Despacho a domicilio</b>'+
-      '<span>Entrega en 24 a 48 horas en Lima · Costo según tu distrito</span>'+
-      '<button class="eb-cp" type="button">Ver cobertura y tarifas</button></div></div>'+
+      '<span>Entrega en 24 a 48 horas en Lima</span>'+
+      '<button class="eb-cp" type="button">Ver cobertura y tarifas</button></div>'+
+      '<span class="eb-tag">Según distrito</span></div>'+
     '<div class="eb-fila" data-nota="3">'+ S.tienda +
       '<div class="eb-txt"><b>Recojo en tienda</b>'+
-      '<span>Sin costo · A partir del <b>'+diaDeRecojo()+'</b></span></div></div>';
+      '<span>A partir del <b>'+diaDeRecojo()+'</b></span></div>'+
+      '<span class="eb-tag libre">Sin costo</span></div>';
 
   /* ---------- confianza ---------- */
   document.getElementById('confianza').innerHTML =
@@ -566,9 +605,9 @@ body.enmarcado .btn-notas{display:none}
     { t:'Plazo de entrega junto al precio',
       d:'Hoy el "Entrega en 48 horas" vive en un carrusel rotativo de la barra superior, lejos del precio, y rota cada cinco segundos: se pierde. Aquí queda fijo donde se decide. El costo no se muestra a propósito, porque hoy solo se puede calcular con la dirección puesta en el checkout: en su lugar se avisa que depende del distrito y se enlaza la lista de cobertura que ya existe en el pie del sitio, para que no sea una sorpresa en el último paso.',
       dato:'Reubicado', conf:'Lo ideal sería calcular el costo por distrito aquí mismo: pide tabla de tarifas y desarrollo' },
-    { t:'El recojo dice un día, no un plazo',
-      d:'"Disponible en 2 días" obliga a hacer la cuenta mental; "a partir del jueves 20 de agosto" se entiende de una. La fecha se calcula sola sumando 2 días al día de hoy, y si cae domingo pasa al lunes: un miércoles muestra viernes, un viernes muestra lunes.',
-      dato:'Se calcula solo', conf:'Confirmar si la tienda atiende sábados y feriados' },
+    { t:'El recojo dice un día, y sale gratis',
+      d:'"Disponible en 2 días" obliga a hacer la cuenta mental; "a partir del jueves 20 de agosto" se entiende de una. Son 2 días hábiles: como la tienda no atiende sábados, domingos ni feriados, el cálculo los salta. Comprando un miércoles sale viernes; un jueves, lunes; y el viernes 24 de julio salta hasta el jueves 30, por Fiestas Patrias. Además el "Sin costo" pasa a etiqueta verde: es la única forma de recibir el producto sin pagar envío y hoy se perdía en el texto.',
+      dato:'Se calcula solo', conf:'La lista de feriados está en el código y hay que renovarla cada año' },
     { t:'Precio en dos niveles',
       d:'Antes eran cuatro cifras sueltas en la misma zona (precio tachado, precio, porcentaje y ahorro) y ninguna mandaba. Ahora el precio final va solo y grande con el porcentaje al lado, y debajo, en gris pequeño, el "antes" y el ahorro. Se lee de un vistazo qué se paga.',
       dato:'Reordenado', conf:'' },
