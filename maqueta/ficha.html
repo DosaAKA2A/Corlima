@@ -43,11 +43,15 @@
 .sku{font-size:12.5px;color:var(--gris-suave);margin-top:5px}
 
 
-.fp-precio{margin-top:18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.fp-precio .antes{font-size:15px;color:var(--gris-suave);text-decoration:line-through}
-.fp-precio .ahora{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.fp-precio .off{background:var(--rojo);color:#fff;font-size:13px;font-weight:700;border-radius:5px;padding:3px 8px}
-.ahorras{font-size:13.5px;color:var(--verde);font-weight:500;margin-top:7px}
+.fp-precio{margin-top:20px;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+.fp-precio .ahora{font-size:36px;font-weight:700;letter-spacing:-.025em;line-height:1;
+  font-variant-numeric:tabular-nums}
+.fp-precio .off{background:var(--rojo);color:#fff;font-size:12.5px;font-weight:700;
+  border-radius:5px;padding:4px 8px;line-height:1}
+.fp-antes{margin:7px 0 0;font-size:13.5px;color:var(--gris);font-variant-numeric:tabular-nums}
+.fp-antes s{color:var(--gris-suave)}
+.fp-antes b{color:var(--verde);font-weight:600}
+.fp-antes .sep{color:var(--linea);margin:0 6px}
 
 /* --- stock --- */
 .stock{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:14px;font-weight:500}
@@ -256,12 +260,15 @@ body.enmarcado .btn-notas{display:none}
         <h1>Batidora con tazón elevable 6.6 L — Empire Red</h1>
         <p class="sku">Código 11481</p>
 
-        <div class="fp-precio">
-          <span class="antes">S/ 3.199,00</span>
+        <div class="fp-precio" data-nota="4">
           <span class="ahora">S/ 1.799,00</span>
           <span class="off">-44%</span>
         </div>
-        <p class="ahorras">Ahorras S/ 1.400,00</p>
+        <p class="fp-antes">
+          Antes <s>S/ 3.199,00</s>
+          <span class="sep" aria-hidden="true">·</span>
+          Ahorras <b>S/ 1.400,00</b>
+        </p>
 
         <div class="stock pocas" data-nota="1">
           <i class="punto"></i>
@@ -279,12 +286,12 @@ body.enmarcado .btn-notas{display:none}
 
         <div class="entrega-bloque" data-nota="2" id="entregaBloque"></div>
 
-        <div class="confianza" data-nota="3" id="confianza"></div>
+        <div class="confianza" data-nota="5" id="confianza"></div>
       </div>
     </div>
 
     <!-- ======== detalle ======== -->
-    <div class="detalle" data-nota="4">
+    <div class="detalle" data-nota="6">
       <div class="fp-tabs" role="tablist">
         <button role="tab" aria-selected="true"  data-panel="p-desc">Descripción</button>
         <button role="tab" aria-selected="false" data-panel="p-esp">Especificaciones</button>
@@ -333,7 +340,7 @@ body.enmarcado .btn-notas{display:none}
          Del catálogo real de Corlima: el único aditamento que vende para esta
          batidora es el molino de metal. Los demás productos son de la misma
          línea Empire Red, que sí están en stock. -->
-    <div class="rel" data-nota="5">
+    <div class="rel" data-nota="7">
       <h2>Súmale el aditamento</h2>
       <p class="fp-sub">Se conecta al centro de aditamentos de esta misma batidora.</p>
       <div class="combo" id="combo"></div>
@@ -355,7 +362,7 @@ body.enmarcado .btn-notas{display:none}
 </main>
 
 <!-- barra fija en movil -->
-<div class="barra-movil" data-nota="7">
+<div class="barra-movil" data-nota="9">
   <div class="bm-p">
     <b>S/ 1.799</b>
     <span>Ahorras S/ 1.400</span>
@@ -364,7 +371,7 @@ body.enmarcado .btn-notas{display:none}
 </div>
 
 <!-- notas de UX -->
-<button class="btn-notas" type="button" id="btnNotas">Ver los 7 cambios</button>
+<button class="btn-notas" type="button" id="btnNotas">Ver los 9 cambios</button>
 
 <aside class="leyenda" id="leyenda" aria-hidden="true">
   <div class="ly-top">
@@ -415,14 +422,28 @@ body.enmarcado .btn-notas{display:none}
      El costo real depende de la dirección y hoy solo se calcula en el checkout,
      así que aquí no se promete una cifra: se dice el plazo y se enlaza la lista
      de cobertura que ya existe en el pie del sitio. */
+
+  // El recojo se habilita 2 días después de la compra. Se calcula con la fecha
+  // del día para que la persona lea un día concreto y no tenga que hacer cuentas.
+  // Se saltan los domingos: si el recojo cae domingo, pasa al lunes.
+  var DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio',
+               'agosto','septiembre','octubre','noviembre','diciembre'];
+  function diaDeRecojo(){
+    var d = new Date();
+    d.setDate(d.getDate() + 2);
+    if(d.getDay() === 0) d.setDate(d.getDate() + 1);
+    return DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()];
+  }
+
   document.getElementById('entregaBloque').innerHTML =
     '<div class="eb-fila">'+ S.camion +
       '<div class="eb-txt"><b>Despacho a domicilio</b>'+
       '<span>Entrega en 24 a 48 horas en Lima · Costo según tu distrito</span>'+
       '<button class="eb-cp" type="button">Ver cobertura y tarifas</button></div></div>'+
-    '<div class="eb-fila">'+ S.tienda +
+    '<div class="eb-fila" data-nota="3">'+ S.tienda +
       '<div class="eb-txt"><b>Recojo en tienda</b>'+
-      '<span>Sin costo, desde 2 horas después de confirmado el pago</span></div></div>';
+      '<span>Sin costo · A partir del <b>'+diaDeRecojo()+'</b></span></div></div>';
 
   /* ---------- confianza ---------- */
   document.getElementById('confianza').innerHTML =
@@ -545,6 +566,12 @@ body.enmarcado .btn-notas{display:none}
     { t:'Plazo de entrega junto al precio',
       d:'Hoy el "Entrega en 48 horas" vive en un carrusel rotativo de la barra superior, lejos del precio, y rota cada cinco segundos: se pierde. Aquí queda fijo donde se decide. El costo no se muestra a propósito, porque hoy solo se puede calcular con la dirección puesta en el checkout: en su lugar se avisa que depende del distrito y se enlaza la lista de cobertura que ya existe en el pie del sitio, para que no sea una sorpresa en el último paso.',
       dato:'Reubicado', conf:'Lo ideal sería calcular el costo por distrito aquí mismo: pide tabla de tarifas y desarrollo' },
+    { t:'El recojo dice un día, no un plazo',
+      d:'"Disponible en 2 días" obliga a hacer la cuenta mental; "a partir del jueves 20 de agosto" se entiende de una. La fecha se calcula sola sumando 2 días al día de hoy, y si cae domingo pasa al lunes: un miércoles muestra viernes, un viernes muestra lunes.',
+      dato:'Se calcula solo', conf:'Confirmar si la tienda atiende sábados y feriados' },
+    { t:'Precio en dos niveles',
+      d:'Antes eran cuatro cifras sueltas en la misma zona (precio tachado, precio, porcentaje y ahorro) y ninguna mandaba. Ahora el precio final va solo y grande con el porcentaje al lado, y debajo, en gris pequeño, el "antes" y el ahorro. Se lee de un vistazo qué se paga.',
+      dato:'Reordenado', conf:'' },
     { t:'Señales de confianza junto al botón',
       d:'"Distribuidor autorizado de KitchenAid" está en el banner de la portada pero no donde se decide. Junto al botón van también garantía, devoluciones y los medios de pago reales.',
       dato:'Bloque nuevo', conf:'Confirmar medios de pago activos' },
@@ -596,7 +623,7 @@ body.enmarcado .btn-notas{display:none}
     document.body.classList.toggle('notas', v);
     ly.classList.toggle('fp-ver', v);
     ly.setAttribute('aria-hidden', !v);
-    btn.textContent = v ? 'Ocultar cambios' : 'Ver los 7 cambios';
+    btn.textContent = v ? 'Ocultar cambios' : 'Ver los 9 cambios';
   }
   btn.onclick = function(){ abrir(!ly.classList.contains('fp-ver')); };
   document.getElementById('cerrarNotas').onclick = function(){ abrir(false); };
