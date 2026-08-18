@@ -52,6 +52,9 @@ a{color:inherit;text-decoration:none}
 .busca button{position:absolute;right:4px;top:2px;width:30px;height:30px;border:0;border-radius:50%;
   background:none;color:var(--azul);cursor:pointer;display:grid;place-items:center}
 .busca svg{width:17px;height:17px}
+.hamb{display:none;background:none;border:0;color:var(--azul);cursor:pointer;
+  width:38px;height:34px;place-items:center;flex:none;padding:0}
+.hamb svg{width:26px;height:26px}
 .iconos{display:flex;align-items:center;gap:20px;color:var(--azul)}
 .iconos a{position:relative;display:block;line-height:0}
 .iconos svg{width:23px;height:23px}
@@ -300,10 +303,19 @@ a{color:inherit;text-decoration:none}
   .menu a{font-size:13px}
 }
 @media (max-width:640px){
-  .cab .caja{flex-wrap:wrap;gap:14px}
+  .cab .caja{flex-wrap:wrap;gap:14px 12px}
   .cab .marca img{height:104px;margin:-30px -72px}
-  .busca{order:3;flex-basis:100%;max-width:none}
+  .busca{order:3;flex:1 1 auto;max-width:none}
+  .hamb{display:grid;order:4}
   .iconos{margin-left:auto}
+  /* el menú de categorías se despliega solo al tocar las tres barras */
+  .menu{display:none;border-bottom:0}
+  .menu.abierto{display:block;border-bottom:1px solid var(--linea)}
+  .menu .caja{flex-direction:column;align-items:stretch;gap:0;overflow:visible;
+    padding-top:4px;padding-bottom:8px}
+  .menu a{padding:13px 2px;border-bottom:1px solid var(--linea);font-size:14px}
+  .menu a:last-child{border-bottom:0}
+  .menu a.pro{align-self:flex-start;margin-top:10px;padding:7px 14px}
   .tope .rota span{min-width:0}
   .tope .pro{display:none}
   .item{grid-template-columns:88px minmax(0,1fr);gap:15px;padding:16px}

@@ -29,7 +29,8 @@
     qr:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>',
     wsp:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2m0 1.8a8.2 8.2 0 1 1-4.2 15.2l-.3-.2-3 .8.8-3-.2-.3A8.2 8.2 0 0 1 12 3.8m-3.3 4c-.2 0-.5.1-.7.4s-.9.9-.9 2.2.9 2.6 1 2.8c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7s1.6-.6 1.8-1.3c.2-.6.2-1.2.2-1.3l-.6-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1s-1.1-.4-2-1.3c-.7-.6-1.2-1.4-1.3-1.7s0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5s0-.4 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z"/></svg>',
     fb:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7h2.3l.4-2.8h-2.7V9.4c0-.8.2-1.4 1.4-1.4h1.4V5.5c-.3 0-1.2-.1-2.2-.1-2.1 0-3.6 1.3-3.6 3.7v2.1H8.2V14h2.3v7z"/></svg>',
-    ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="16.9" cy="7.1" r="1" fill="currentColor" stroke="none"/></svg>'
+    ig:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="4.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="16.9" cy="7.1" r="1" fill="currentColor" stroke="none"/></svg>',
+    barras:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>'
   };
 
   var LOGO = 'https://www.corlima.pe/themes/childtheme/assets/img/logo-header-desk.svg';
@@ -86,11 +87,14 @@
       '<a class="marca" href="carrito.html"><img src="'+LOGO+'" alt="Corlima"></a>'+
       '<div class="busca"><input type="text" placeholder="¿Qué estás buscando?" aria-label="Buscar productos">'+
       '<button type="button" aria-label="Buscar">'+SVG.lupa+'</button></div>'+
+      '<button class="hamb" type="button" id="hamb" aria-label="Abrir el menú" aria-expanded="false" '+
+      'aria-controls="menuNav">'+SVG.barras+'</button>'+
       '<div class="iconos"><a href="#" aria-label="Mi cuenta">'+SVG.user+'</a>'+
       '<a href="carrito.html" aria-label="Carrito">'+SVG.carro+'<span class="globo" id="globo">0</span></a></div></div>';
 
     var menu = document.createElement('nav');
     menu.className='menu';
+    menu.id='menuNav';
     menu.innerHTML='<div class="caja">'+
       ['COCINA Y COCCIÓN','MESA','BAR','ORGANIZACIÓN Y LIMPIEZA','ELECTRODOMÉSTICOS']
         .map(function(t){ return '<a href="#">'+t+'</a>'; }).join('')+
@@ -127,6 +131,21 @@
     document.body.appendChild(pie);
     document.body.appendChild(wa);
     document.body.appendChild(doc);
+
+    // menú de categorías: en el celular vive detrás del botón de tres barras,
+    // como en corlima.pe (en escritorio siempre está desplegado)
+    var hamb = document.getElementById('hamb');
+    hamb.onclick = function(){
+      var ab = menu.classList.toggle('abierto');
+      hamb.setAttribute('aria-expanded', ab);
+      hamb.setAttribute('aria-label', ab ? 'Cerrar el menú' : 'Abrir el menú');
+    };
+    menu.addEventListener('click', function(e){
+      if(e.target.closest('a')){
+        menu.classList.remove('abierto');
+        hamb.setAttribute('aria-expanded','false');
+      }
+    });
 
     // mensajes que rotan arriba
     var msgs=['Entrega hasta en 48 horas','Despacho a domicilio en todo PERÚ','Atención al cliente personalizada'];

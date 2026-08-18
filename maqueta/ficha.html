@@ -43,10 +43,10 @@
 .sku{font-size:12.5px;color:var(--gris-suave);margin-top:5px}
 
 
-.precio{margin-top:18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.precio .antes{font-size:15px;color:var(--gris-suave);text-decoration:line-through}
-.precio .ahora{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.precio .off{background:var(--rojo);color:#fff;font-size:13px;font-weight:700;border-radius:5px;padding:3px 8px}
+.fp-precio{margin-top:18px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.fp-precio .antes{font-size:15px;color:var(--gris-suave);text-decoration:line-through}
+.fp-precio .ahora{font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.fp-precio .off{background:var(--rojo);color:#fff;font-size:13px;font-weight:700;border-radius:5px;padding:3px 8px}
 .ahorras{font-size:13.5px;color:var(--verde);font-weight:500;margin-top:7px}
 
 /* --- stock --- */
@@ -102,15 +102,16 @@
 
 /* --- detalle --- */
 .detalle{border-top:1px solid var(--linea);padding-top:36px;margin-top:8px}
-.tabs{display:flex;gap:28px;border-bottom:1px solid var(--linea);margin-bottom:24px;
+.fp-tabs{display:flex;gap:28px;border-bottom:1px solid var(--linea);margin-bottom:24px;
   overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{background:none;border:0;padding:0 0 12px;font-size:15px;color:var(--gris);
+.fp-tabs::-webkit-scrollbar{display:none}
+.fp-tabs button{background:none;border:0;padding:0 0 12px;font-size:15px;color:var(--gris);
   cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-1px}
-.tabs button[aria-selected="true"]{color:var(--tinta);font-weight:500;border-bottom-color:var(--azul)}
-.panel{display:none;max-width:760px}
-.panel.ver{display:block}
-.panel p{margin:0 0 14px;color:#2B3242;line-height:1.65}
+.fp-tabs button:hover{color:var(--tinta)}
+.fp-tabs button[aria-selected="true"]{color:var(--tinta);font-weight:500;border-bottom-color:var(--azul)}
+.fp-panel{display:none;max-width:760px}
+.fp-panel.fp-ver{display:block}
+.fp-panel p{margin:0 0 14px;color:#2B3242;line-height:1.65}
 .especs{width:100%;border-collapse:collapse}
 .especs th,.especs td{text-align:left;padding:10px 0;border-bottom:1px solid var(--linea);font-size:14px;vertical-align:top}
 .especs th{color:var(--gris);font-weight:400;width:210px}
@@ -121,7 +122,7 @@
 /* --- relacionados --- */
 .rel{border-top:1px solid var(--linea);padding:34px 0 60px}
 .rel h2{font-size:19px;font-weight:500;margin:0 0 4px}
-.rel .sub{font-size:13.5px;color:var(--gris);margin:0 0 20px}
+.rel .fp-sub{font-size:13.5px;color:var(--gris);margin:0 0 20px}
 .tarjetas{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:18px}
 .tarjeta{border:1px solid var(--linea);border-radius:var(--radio);overflow:hidden;background:#fff;
   display:flex;flex-direction:column;transition:.15s}
@@ -165,7 +166,7 @@ body.notas .marca-nota{display:grid}
 .leyenda{position:fixed;right:0;top:0;bottom:0;width:370px;max-width:88vw;background:#fff;z-index:80;
   border-left:1px solid var(--linea);box-shadow:-8px 0 30px rgba(17,17,17,.14);
   transform:translateX(100%);transition:transform .22s ease;display:flex;flex-direction:column}
-.leyenda.ver{transform:none}
+.leyenda.fp-ver{transform:none}
 .ly-top{padding:18px 20px 14px;border-bottom:1px solid var(--linea);display:flex;
   justify-content:space-between;align-items:flex-start;gap:12px}
 .ly-top h2{font-size:17px;margin:0 0 4px;font-weight:500}
@@ -186,7 +187,7 @@ body.notas .marca-nota{display:grid}
 .ly-aparte{margin-top:18px;border-top:2px solid var(--linea);padding-top:6px}
 .ly-aparte h3{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--gris-suave);
   font-weight:600;margin:12px 0 0}
-.ly-n.vacio{background:none;border:1.5px dashed var(--gris-suave);color:var(--gris-suave);font-size:15px}
+.ly-n.fp-vacio{background:none;border:1.5px dashed var(--gris-suave);color:var(--gris-suave);font-size:15px}
 
 @media (max-width:1080px){
   .ficha{grid-template-columns:1fr;gap:30px}
@@ -197,7 +198,7 @@ body.notas .marca-nota{display:grid}
   .minis{flex-direction:row;overflow-x:auto;order:2;padding-bottom:4px}
   .minis button{flex:none;width:62px}
   .compra h1{font-size:21px}
-  .precio .ahora{font-size:29px}
+  .fp-precio .ahora{font-size:29px}
   .confianza{grid-template-columns:1fr}
   .barra-movil{display:flex}
   body{padding-bottom:78px}
@@ -244,7 +245,7 @@ body.enmarcado .flotantes{display:none}
         <h1>Batidora con tazón elevable 6.6 L — Empire Red</h1>
         <p class="sku">Código 11481</p>
 
-        <div class="precio">
+        <div class="fp-precio">
           <span class="antes">S/ 3.199,00</span>
           <span class="ahora">S/ 1.799,00</span>
           <span class="off">-44%</span>
@@ -275,14 +276,14 @@ body.enmarcado .flotantes{display:none}
 
     <!-- ======== detalle ======== -->
     <div class="detalle" data-nota="4">
-      <div class="tabs" role="tablist">
+      <div class="fp-tabs" role="tablist">
         <button role="tab" aria-selected="true"  data-panel="p-desc">Descripción</button>
         <button role="tab" aria-selected="false" data-panel="p-esp">Especificaciones</button>
         <button role="tab" aria-selected="false" data-panel="p-inc">Qué incluye</button>
         <button role="tab" aria-selected="false" data-panel="p-gar">Garantía y devoluciones</button>
       </div>
 
-      <div class="panel ver" id="p-desc">
+      <div class="fp-panel fp-ver" id="p-desc">
         <p>Eleva tus creaciones con la batidora de tazón elevable, pensada para mezclar ingredientes
         pesados y densos sin esfuerzo. Once velocidades, incluida la velocidad de mezclado envolvente,
         y un motor de 375 W (0,4 HP) que sostiene el ritmo en masas firmes.</p>
@@ -291,7 +292,7 @@ body.enmarcado .flotantes{display:none}
         con tu cocina en lugar de quedarse corto.</p>
       </div>
 
-      <div class="panel" id="p-esp">
+      <div class="fp-panel" id="p-esp">
         <table class="especs">
           <tbody>
             <tr><th>Capacidad del tazón</th><td>6,6 litros</td></tr>
@@ -306,11 +307,11 @@ body.enmarcado .flotantes{display:none}
         </table>
       </div>
 
-      <div class="panel" id="p-inc">
+      <div class="fp-panel" id="p-inc">
         <ul class="incluye" id="incluye"></ul>
       </div>
 
-      <div class="panel" id="p-gar">
+      <div class="fp-panel" id="p-gar">
         <p>Corlima es <b>distribuidor autorizado de KitchenAid</b> en Perú: el equipo llega con la
         garantía oficial del fabricante y el servicio técnico se atiende en el país.</p>
         <p>Si el producto llega con falla o no es lo que esperabas, puedes solicitar el cambio o la
@@ -322,13 +323,13 @@ body.enmarcado .flotantes{display:none}
     <!-- ======== relacionados ======== -->
     <div class="rel" data-nota="5">
       <h2>Accesorios para esta batidora</h2>
-      <p class="sub">Se conectan al centro de aditamentos de tu KitchenAid.</p>
+      <p class="fp-sub">Se conectan al centro de aditamentos de tu KitchenAid.</p>
       <div class="tarjetas" id="accesorios"></div>
     </div>
 
     <div class="rel" style="border-top:1px solid var(--linea)">
       <h2>Otras batidoras KitchenAid</h2>
-      <p class="sub">Mismo sistema, distinta capacidad o acabado.</p>
+      <p class="fp-sub">Mismo sistema, distinta capacidad o acabado.</p>
       <div class="tarjetas" id="similares"></div>
     </div>
 
@@ -483,12 +484,12 @@ body.enmarcado .flotantes{display:none}
   document.getElementById('comprarYa').onclick = alCarro;
 
   /* ---------- pestañas ---------- */
-  document.querySelector('.tabs').addEventListener('click', function(e){
+  document.querySelector('.fp-tabs').addEventListener('click', function(e){
     var b = e.target.closest('button'); if(!b) return;
     [].forEach.call(this.children, function(x){ x.setAttribute('aria-selected','false'); });
     b.setAttribute('aria-selected','true');
-    [].forEach.call(document.querySelectorAll('.panel'), function(p){ p.classList.remove('ver'); });
-    document.getElementById(b.getAttribute('data-panel')).classList.add('ver');
+    [].forEach.call(document.querySelectorAll('.fp-panel'), function(p){ p.classList.remove('fp-ver'); });
+    document.getElementById(b.getAttribute('data-panel')).classList.add('fp-ver');
   });
 
   /* ---------- notas de UX ---------- */
@@ -530,7 +531,7 @@ body.enmarcado .flotantes{display:none}
   }).join('') +
   '<div class="ly-aparte"><h3>Queda pendiente</h3>' +
   PENDIENTES.map(function(n){
-    return '<div class="ly-item"><span class="ly-n vacio">·</span><div><b>'+n.t+'</b><p>'+n.d+'</p></div></div>';
+    return '<div class="ly-item"><span class="ly-n fp-vacio">·</span><div><b>'+n.t+'</b><p>'+n.d+'</p></div></div>';
   }).join('') + '</div>';
 
   // el 7 no marca un bloque (es algo que se quita), va anclado al panel de compra
@@ -555,11 +556,11 @@ body.enmarcado .flotantes{display:none}
   document.getElementById('cerrarNotas').innerHTML = S.equis;
   function abrir(v){
     document.body.classList.toggle('notas', v);
-    ly.classList.toggle('ver', v);
+    ly.classList.toggle('fp-ver', v);
     ly.setAttribute('aria-hidden', !v);
     btn.textContent = v ? 'Ocultar cambios' : 'Ver los 7 cambios';
   }
-  btn.onclick = function(){ abrir(!ly.classList.contains('ver')); };
+  btn.onclick = function(){ abrir(!ly.classList.contains('fp-ver')); };
   document.getElementById('cerrarNotas').onclick = function(){ abrir(false); };
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') abrir(false); });
 
